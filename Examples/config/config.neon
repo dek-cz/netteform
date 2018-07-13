@@ -1,0 +1,20 @@
+parameters:
+
+
+php:
+	date.timezone: Europe/Prague
+
+
+application:
+	errorPresenter: Error
+	mapping:
+		*: Examples\*Module\Presenters\*Presenter
+
+
+session:
+	expiration: 14 days
+
+
+services:
+	- Examples\Forms\FormFactory
+	router: Examples\Router\RouterFactory::createRouter

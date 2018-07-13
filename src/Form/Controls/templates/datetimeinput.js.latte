@@ -1,0 +1,128 @@
+
+
+{block content}
+<script type="text/javascript" n:syntax="off">
+
+	var pickadayGlobalSettings = {
+		i18n: {
+			cz: {
+				previousMonth: 'Předchozí',
+				nextMonth: 'Další',
+				months: ['Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'],
+				weekdays: ['Neděle', 'Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota'],
+				weekdaysShort: ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So'],
+				midnight: 'půlnoc',
+				noon: 'poledne'
+			},
+			sk: {
+				previousMonth: 'Predchádzajúci',
+				nextMonth: 'Nasledujúci',
+				months: ['Január', 'Február', 'Marec', 'Apríl', 'Máj', 'Jún', 'Júl', 'August', 'September', 'Október', 'November', 'December'],
+				weekdays: ['Nedel\'a', 'Pondelok', 'Utorok', 'Streda', 'Štvrtok', 'Piatok', 'Sobota'],
+				weekdaysShort: ['Ned', 'Pon', 'Uto', 'Str', 'Štv', 'Pia', 'Sob'],
+				midnight: 'polnoc',
+				noon: 'poludnie'
+			}
+		},
+		formatParser: {
+			cz: {
+				dateTimeFormat: 'd.M.yyyy HH:mm:ss',
+				dateTimeFormatNoSec: 'd.M.yyyy HH:mm',
+				dateFormat: 'd.M.yyyy',
+				dateTimeToString: function (date, format) {
+					const day = date.getDate();
+					const month = date.getMonth() + 1;
+					const year = date.getFullYear();
+					var hours = date.getHours();
+					var mins = date.getMinutes();
+					var seconds = date.getSeconds();
+					hours = hours > 9 ? hours : '0' + hours;
+					mins = mins > 9 ? mins : '0' + mins;
+					seconds = seconds > 9 ? seconds : '0' + seconds;
+					return `${day}.${month}.${year} ${hours}:${mins}:${seconds}`;
+				},
+				dateTimeParse: function (dateString, format) {
+					const parts1 = dateString.split(' ');
+					const parts2 = parts1[0].split('.');
+					const parts3 = parts1[1].split(':');
+					const day = parseInt(parts2[0], 10);
+					const month = parseInt(parts2[1] - 1, 10);
+					const year = parseInt(parts2[2], 10);
+					const hours = parseInt(parts3[0], 10);
+					const mins = parseInt(parts3[1], 10);
+					const seconds = parseInt(parts3[2], 10);
+					return new Date(year, month, day, hours, mins, seconds, 0);
+				},
+				dateTimeNoSecToString: function (date, format) {
+					const day = date.getDate();
+					const month = date.getMonth() + 1;
+					const year = date.getFullYear();
+					var hours = date.getHours();
+					var mins = date.getMinutes();
+					hours = hours > 9 ? hours : '0' + hours;
+					mins = mins > 9 ? mins : '0' + mins;
+					return `${day}.${month}.${year} ${hours}:${mins}`;
+				},
+				dateTimeNoSecParse: function (dateString, format) {
+					const parts1 = dateString.split(' ');
+					const parts2 = parts1[0].split('.');
+					const parts3 = parts1[1].split(':');
+					const day = parseInt(parts2[0], 10);
+					const month = parseInt(parts2[1] - 1, 10);
+					const year = parseInt(parts2[2], 10);
+					const hours = parseInt(parts3[0], 10);
+					const mins = parseInt(parts3[1], 10);
+					return new Date(year, month, day, hours, mins, 0, 0);
+				},
+				dateToString: function (date, format) {
+					const day = date.getDate();
+					const month = date.getMonth() + 1;
+					const year = date.getFullYear();
+					return `${day}.${month}.${year}`;
+				},
+				dateParse: function (dateString, format) {
+					const parts2 = dateString.split('.');
+					const day = parseInt(parts2[0], 10);
+					const month = parseInt(parts2[1] - 1, 10);
+					const year = parseInt(parts2[2], 10);
+					return new Date(year, month, day);
+				}
+			}
+		}
+	};
+	pickadayGlobalSettings.formatParser.sk = pickadayGlobalSettings.formatParser.cz;
+
+	(function (Nette) {
+		"use strict";
+
+		// Nette validators
+		Nette.validators["DekAppsFormControlsDateTimeInput_validateDateInputValid"] = function (elem, arg, val) {
+			return true;
+		};
+		Nette.validators["DekAppsFormControlsDateTimeInput_validateDateInputRange"] = function (elem, arg, val) {
+			return Nette.isArray(arg) ? ((arg[0] === null || val >= arg[0]) && (arg[1] === null || val <= arg[1])) : null;
+		};
+	})(Nette);
+
+	if (typeof PickadayUtils === 'undefined') {
+		PickadayUtils = {};
+	}
+	(function (PickadayUtils) {
+		PickadayUtils.getParsers = function (field) {
+			var toString = '', parser = '';
+			if (field.getAttribute("pickaday-showTime") == "1") {
+				if (field.getAttribute("pickaday-showSeconds") == "1") {
+					toString = pickadayGlobalSettings['formatParser'][field.getAttribute("pickaday-lang")]['dateTimeToString'];
+					parser = pickadayGlobalSettings['formatParser'][field.getAttribute("pickaday-lang")]['dateTimeParse'];
+				} else {
+					toString = pickadayGlobalSettings['formatParser'][field.getAttribute("pickaday-lang")]['dateTimeNoSecToString'];
+					parser = pickadayGlobalSettings['formatParser'][field.getAttribute("pickaday-lang")]['dateTimeNoSecParse'];
+				}
+			} else {
+				toString = pickadayGlobalSettings['formatParser'][field.getAttribute("pickaday-lang")]['dateToString'];
+				parser = pickadayGlobalSettings['formatParser'][field.getAttribute("pickaday-lang")]['dateParse'];
+			}
+			return {toString: toString, parser: parser};
+		}
+	}(PickadayUtils));
+</script>

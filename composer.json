@@ -1,0 +1,40 @@
+{
+	"name": "dek-apps/netteform",
+	"config": {
+		"secure-http": false,
+		"fxp-asset": {
+			"repositories": {
+				"bower-asset/pikaday-time": {
+					"type": "bower-vcs",
+					"url": "https://github.com/vrestihnat/Pikaday.git"
+				}
+			},
+			"installer-paths": {
+				"npm-asset-library": "www/assets/vendor",
+				"bower-asset-library": "www/assets/vendor"
+			}
+		}
+	},
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://composer.dek.cz"
+		}
+	],
+	"require": {
+		"php": ">= 5.6.0",
+		"nette/nette": "~2.3.10",
+		"kdyby/translation": "2.3.1",
+		"symfony/yaml": "3.4.11"
+	},
+	"require-dev": {
+		"nette/tester": "^2.0",
+		"mockery/mockery": "^1.0",
+		"bower-asset/pikaday-time": "dev-master"
+	},
+	"autoload": {
+		"psr-4": {
+			"DekApps\\": "src/"
+		}
+	}
+}
