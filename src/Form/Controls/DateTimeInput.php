@@ -70,7 +70,15 @@ class DateTimeInput extends BaseControl
     private $incrementSecondBy = 1;
     private $autoClose = true;
     private $timeLabel = null;
-    private $defaultDate = '';
+
+    /** @var ?DateTime */
+    private $defaultDate = null;
+
+    /** @var ?DateTime */
+    private $pickerDefaultDate = null;
+
+    /** @var ?integer */
+    private $pickerDefaultYear = null;
 
     public static function getCssjsIsSet()
     {
@@ -185,6 +193,8 @@ class DateTimeInput extends BaseControl
             'pickaday-autoClose' => $this->getAutoClose() ? 1 : 0,
             'pickaday-timeLabel' => $this->getTimeLabel(),
             'pickaday-format' => $format,
+            'pickaday-pickerDefaultDate' => $this->getPickerDefaultDate(),
+            'pickaday-pickerDefaultYear' => $this->getPickerDefaultYear(),
             'pickaday-lang' => $this->getLang()
         ]);
 
@@ -407,7 +417,7 @@ class DateTimeInput extends BaseControl
         return $this->defaultDate;
     }
 
-    public function setDefaultDate($defaultDate)
+    public function setDefaultDate(\DateTime $defaultDate)
     {
         $this->defaultDate = $defaultDate;
         return $this;
@@ -421,6 +431,28 @@ class DateTimeInput extends BaseControl
     public function setLang($lang)
     {
         $this->lang = $lang;
+        return $this;
+    }
+
+    public function getPickerDefaultDate()
+    {
+        return $this->pickerDefaultDate;
+    }
+
+    public function getPickerDefaultYear()
+    {
+        return $this->pickerDefaultYear;
+    }
+
+    public function setPickerDefaultDate(\DateTime $pickerDefaultDate)
+    {
+        $this->pickerDefaultDate = $pickerDefaultDate;
+        return $this;
+    }
+
+    public function setPickerDefaultYear($pickerDefaultYear)
+    {
+        $this->pickerDefaultYear = $pickerDefaultYear;
         return $this;
     }
 

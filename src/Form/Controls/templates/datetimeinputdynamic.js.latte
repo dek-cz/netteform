@@ -10,31 +10,33 @@
 			}
 			var isdatetime = inputs[i].getAttribute("data-dateinput-type");
 			if (null !== isdatetime) {
-				var field = inputs[i],parsers = PickadayUtils.getParsers(field);
-				var parser = parsers.parser;
-				var toString = parsers.toString;
-				console.log(parsers);
-				var p = new Pikaday(
-						{
-							field: field,
-							firstDay: field.getAttribute("pickaday-firstDay") * 1,
-							theme: field.getAttribute("pickaday-theme"),
-							showTime: field.getAttribute("pickaday-showTime") == "1" ? true : false,
-							showMinutes: field.getAttribute("pickaday-showMinutes") == "1" ? true : false,
-							showSeconds: field.getAttribute("pickaday-showSeconds") == "1" ? true : false,
-							use24hour: field.getAttribute("pickaday-use24hour") == "1" ? true : false,
-							incrementHourBy: field.getAttribute("pickaday-incrementHourBy") * 1,
-							incrementMinuteBy: field.getAttribute("pickaday-incrementMinuteBy") * 1,
-							incrementSecondBy: field.getAttribute("pickaday-incrementSecondBy") * 1,
-							autoClose: field.getAttribute("pickaday-autoClose") == "1" ? true : false,
-							timeLabel: field.getAttribute("pickaday-timeLabel"),
-							defaultDate: parser(field.getAttribute("pickaday-defaultDate")),
-							setDefaultDate: true,
-							i18n: pickadayGlobalSettings['i18n'][field.getAttribute("pickaday-lang")],
-							format: field.getAttribute("pickaday-showTime") == "1" ? pickadayGlobalSettings['formatParser'][field.getAttribute("pickaday-lang")]['dateTimeFormat'] : pickadayGlobalSettings['formatParser'][field.getAttribute("pickaday-lang")]['dateTime'],
-							toString: toString,
-							parse: parser
-						});
+				var field = inputs[i],
+						parsers = PickadayUtils.getParsers(field),
+						parser = parsers.parser,
+						toString = parsers.toString,
+						pickerDefaultDate = field.getAttribute("pickaday-pickerDefaultDate")?parser(field.getAttribute("pickaday-pickerDefaultDate")):null,
+						pickerDefaultYear = field.getAttribute("pickaday-pickerDefaultYear") * 1,
+						p = new Pikaday(
+								{
+									field: field,
+									firstDay: field.getAttribute("pickaday-firstDay") * 1,
+									theme: field.getAttribute("pickaday-theme"),
+									showTime: field.getAttribute("pickaday-showTime") == "1" ? true : false,
+									showMinutes: field.getAttribute("pickaday-showMinutes") == "1" ? true : false,
+									showSeconds: field.getAttribute("pickaday-showSeconds") == "1" ? true : false,
+									use24hour: field.getAttribute("pickaday-use24hour") == "1" ? true : false,
+									incrementHourBy: field.getAttribute("pickaday-incrementHourBy") * 1,
+									incrementMinuteBy: field.getAttribute("pickaday-incrementMinuteBy") * 1,
+									incrementSecondBy: field.getAttribute("pickaday-incrementSecondBy") * 1,
+									autoClose: field.getAttribute("pickaday-autoClose") == "1" ? true : false,
+									timeLabel: field.getAttribute("pickaday-timeLabel"),
+									defaultDate: parser(field.getAttribute("pickaday-defaultDate")),
+									setDefaultDate: true,
+									i18n: pickadayGlobalSettings['i18n'][field.getAttribute("pickaday-lang")],
+									format: field.getAttribute("pickaday-showTime") == "1" ? pickadayGlobalSettings['formatParser'][field.getAttribute("pickaday-lang")]['dateTimeFormat'] : pickadayGlobalSettings['formatParser'][field.getAttribute("pickaday-lang")]['dateTime'],
+									toString: toString,
+									parse: parser
+								});
 				if (p.defaultDate === undefined) {
 					var d1 = null, d2 = null;
 					if (field.getAttribute("pickaday-rangeMin")) {
@@ -54,6 +56,12 @@
 					if ((new Date()) < d1) {
 						p.gotoDate(d1);
 					}
+				} else if (p.defaultDate) {
+					p.gotoDate(p.defaultDate);
+				} else if (pickerDefaultDate) {
+					p.gotoDate(pickerDefaultDate);
+				} else if (pickerDefaultYear) {
+					p.gotoYear(pickerDefaultYear);
 				}
 			}
 		}
