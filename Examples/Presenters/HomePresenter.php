@@ -19,7 +19,7 @@ class HomepagePresenter extends Presenter
 		$form->addText('firstname', 'form.employment.firtstname')->setRequired('form.defaults.messages.required');
 		$form->addText('surname', 'form.employment.surname')->setRequired('form.defaults.messages.required');
 		$form->addText('title', 'form.employment.title');
-		$form->addDateTimeInput('birthdate', 'form.employment.birthdate', DateTimeInput::TYPE_DATE)->addRule(\Nette\Forms\Form::RANGE, 'form.defaults.messages.dateinterval', array(new \DateTime('1970-01-01'), new \DateTime('2006-12-31')))->setDefaultDate(new \DateTime('2009-04-30'))->setTheme(DateTimeInput::DARKTHEME)->setRequired('form.defaults.messages.required');
+		$form->addDateTimeInput('birthdate', 'form.employment.birthdate', DateTimeInput::TYPE_DATE)->addRule(DateTimeInput::VALIDDATE, 'form.defaults.messages.date')->addRule(\Nette\Forms\Form::RANGE, 'form.defaults.messages.dateinterval', array(new \DateTime('1970-01-01'), new \DateTime('2006-12-31')))->setDefaultDate(new \DateTime('2009-04-30'))->setTheme(DateTimeInput::DARKTHEME)->setRequired('form.defaults.messages.required');
 		$form->addDateTimeInput('interviewdate', 'form.employment.interviewdate')->addRule(\Nette\Forms\Form::RANGE, 'form.defaults.messages.dateinterval', array((new \DateTime())->modify('-1 hour'), new \DateTime('9999-12-31 12:00:00')))->setDefaultDate(new \DateTime('2018-11-30 13:33:27'));
 		$form->addPhoneInput('phoneNum', 'form.employment.phonenum')->setRequired('form.defaults.messages.required')->addCondition(\Nette\Application\UI\Form::FILLED)->addRule(PhoneInput::VALIDPHONENUM, 'form.defaults.messages.phonenum');
 		

@@ -23,6 +23,8 @@ class DateTimeInput extends BaseControl
      */
     const DARKTHEME = 'dark-theme',
             TRIANGLETHEME = 'triangle-theme';
+	
+	const VALIDDATE =  __CLASS__ . '::validateDateInputValid';
 
     /** @var string */
     protected $type;
@@ -210,9 +212,7 @@ class DateTimeInput extends BaseControl
             $operation = __CLASS__ . '::validateDateInputRange';
             $arg[0] = $this->formatDate($arg[0]);
             $arg[1] = $this->formatDate($arg[1]);
-        } elseif ($operation === \Nette\Forms\Form::VALID) {
-            $operation = __CLASS__ . '::validateDateInputValid';
-        }
+        } 
         return parent::addRule($operation, $message, $arg);
     }
 

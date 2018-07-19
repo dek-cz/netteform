@@ -97,8 +97,9 @@
 
 		// Nette validators
 		Nette.validators["DekAppsFormControlsDateTimeInput_validateDateInputValid"] = function (elem, arg, val) {
-			var parsers = PickadayUtils.getParsers(elem);	
-			return parsers.parser(val)?true:false;
+			var parsers = PickadayUtils.getParsers(elem);
+			var res = parsers.parser(val);
+			return Object.prototype.toString.call(res) === "[object Date]" && !isNaN(res.getTime());
 		};
 		Nette.validators["DekAppsFormControlsDateTimeInput_validateDateInputRange"] = function (elem, arg, val) {
 			var parsers = PickadayUtils.getParsers(elem);
