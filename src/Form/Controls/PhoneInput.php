@@ -11,7 +11,7 @@ class PhoneInput extends BaseControl
 
 	const NAME_PREFIX = 'phoneprefix',
 			NAME_NUMBER = 'phonenumber',
-			VALIDPHONENUM = __CLASS__ .'::validatePhoneNumber';
+			VALIDPHONENUM = __CLASS__ . '::validatePhoneNumber';
 
 	/** @var array */
 	protected static $phonePrefixes = array(
@@ -400,6 +400,7 @@ class PhoneInput extends BaseControl
 						'selected?' => $this->prefix === NULL ? $this->defaultPrefix : $this->prefix,
 							)
 			);
+			$control->setRole('combobox');
 			$control->name($name . '[' . static::NAME_PREFIX . ']')->id($this->getHtmlId());
 			if ($this->disabled) {
 				$control->disabled($this->disabled);
@@ -409,6 +410,7 @@ class PhoneInput extends BaseControl
 			$control = \Nette\Utils\Html::el('input')->name($name . '[' . static::NAME_NUMBER . ']');
 			$control->value($this->number);
 			$control->type('text');
+			$control->setRole('textbox');
 			if ($this->disabled) {
 				$control->disabled($this->disabled);
 			}

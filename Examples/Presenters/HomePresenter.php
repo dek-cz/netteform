@@ -24,7 +24,7 @@ class HomepagePresenter extends Presenter
 		$form->addPhoneInput('phoneNum', 'form.employment.phonenum')->setRequired('form.defaults.messages.required')->addCondition(\Nette\Application\UI\Form::FILLED)->addRule(PhoneInput::VALIDPHONENUM, 'form.defaults.messages.phonenum');
 		
 		$form->addCheckbox('function', 'form.nastaveni_cookies.function.title')->setText('form.nastaveni_cookies.function.text');
-		$form->addSubmit('submit', 'form.nastaveni_cookies.submit_button')->setAttribute('role', 'button')->setAttribute('class', 'dek-button-green');
+		$form->addSubmit('submit', 'form.nastaveni_cookies.submit_button')->setAttribute('class', 'dek-button-green');
 
 		$form->onSuccess[] = function ($form)
 		{
