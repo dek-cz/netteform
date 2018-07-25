@@ -409,7 +409,7 @@ class PhoneInput extends BaseControl
 		} elseif ($key === static::NAME_NUMBER) {
 			$control = \Nette\Utils\Html::el('input')->name($name . '[' . static::NAME_NUMBER . ']');
 			$control->value($this->number);
-			$control->type('text');
+			$control->type('tel');
 			$control->setRole('textbox');
 			if ($this->disabled) {
 				$control->disabled($this->disabled);
