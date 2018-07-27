@@ -23,8 +23,7 @@ class DateTimeInput extends BaseControl
      */
     const DARKTHEME = 'dark-theme',
             TRIANGLETHEME = 'triangle-theme';
-	
-	const VALIDDATE =  __CLASS__ . '::validateDateInputValid';
+    const VALIDDATE = __CLASS__ . '::validateDateInputValid';
 
     /** @var string */
     protected $type;
@@ -142,6 +141,7 @@ class DateTimeInput extends BaseControl
     public function getControl()
     {
         $css = $js = $jsd = $jsutils = '';
+        $c = parent::getControl();
         $php = $this->getPhpPartControl(parent::getControl());
         $template = new \Latte\Engine;
         if (!self::getCssjsIsSet()) {
@@ -200,6 +200,10 @@ class DateTimeInput extends BaseControl
             'pickaday-lang' => $this->getLang()
         ]);
 
+        $err = $this->getErrors();
+        if ($err) {
+            $control->class('error', true);
+        }
 
         return $control;
     }
@@ -212,7 +216,7 @@ class DateTimeInput extends BaseControl
             $operation = __CLASS__ . '::validateDateInputRange';
             $arg[0] = $this->formatDate($arg[0]);
             $arg[1] = $this->formatDate($arg[1]);
-        } 
+        }
         return parent::addRule($operation, $message, $arg);
     }
 
