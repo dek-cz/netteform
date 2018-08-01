@@ -39,7 +39,7 @@
         }
         op = op.replace('::', '_');
         op = op.replace(/\\/g, '');
-
+        console.log(elem, op);
         return Nette.validators[op] ? Nette.validators[op](elem, arg, val) : null;
     };
 
@@ -128,7 +128,7 @@
                     Nette.addClass(mask, 'error');
                     var error = label.nextSibling;
                     error = error && error.nodeName == '#text' ? error.nextSibling : error;
-                    if (!(error && error.getAttribute('role') == 'alert' && error.innerHTML == message)) {
+                    if (!(error && typeof error.getAttribute === "function" && error.getAttribute('role') == 'alert' && error.innerHTML == message)) {
                         var div = document.createElement("div");
                         div.setAttribute('role', 'alert');
                         div.innerHTML = message;
@@ -144,7 +144,7 @@
                     Nette.addClass(mask, 'error');
                     var error = container.nextSibling;
                     error = error && error.nodeName == '#text' ? error.nextSibling : error;
-                    if (!(error && error.getAttribute('role') == 'alert' && error.innerHTML == message)) {
+                    if (!(error && typeof error.getAttribute === "function" && error.getAttribute('role') == 'alert' && error.innerHTML == message)) {
                         var div = document.createElement("div");
                         div.setAttribute('role', 'alert');
                         div.innerHTML = message;
@@ -155,7 +155,7 @@
             } else {
                 var error = elem.nextSibling;
                 error = error && error.nodeName == '#text' ? error.nextSibling : error;
-                if (!(error && error.getAttribute('role') == 'alert' && error.innerHTML == message)) {
+                if (!(error && typeof error.getAttribute === "function" && error.getAttribute('role') == 'alert' && error.innerHTML == message)) {
                     var div = document.createElement("div");
                     div.setAttribute('role', 'alert');
                     div.innerHTML = message;
@@ -173,7 +173,7 @@
                 Nette.removeClass(mask, 'error');
                 var error = label.nextSibling;
                 error = error && error.nodeName == '#text' ? error.nextSibling : error;
-                if (error && error.getAttribute('role') == 'alert') {
+                if (error && typeof error.getAttribute === "function" && error.getAttribute('role') == 'alert') {
                     error.parentNode.removeChild(error);
 
                 }
@@ -188,17 +188,18 @@
                 Nette.removeClass(mask, 'error');
                 var error = container.nextSibling;
                 error = error && error.nodeName == '#text' ? error.nextSibling : error;
-                if (error && error.getAttribute('role') == 'alert') {
+                if (error && typeof error.getAttribute === "function" && error.getAttribute('role') == 'alert') {
                     error.parentNode.removeChild(error);
 
                 }
             }
             
         } else {
+            
             Nette.removeClass(elem, 'error');
             var error = elem.nextSibling;
             error = error && error.nodeName == '#text' ? error.nextSibling : error;
-            if (error && error.getAttribute('role') == 'alert') {
+            if (error && typeof error.getAttribute === "function" && error.getAttribute('role') == 'alert') {
                 error.parentNode.removeChild(error);
 
             }

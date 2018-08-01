@@ -146,7 +146,7 @@ class DateTimeInput extends BaseControl
         $template = new \Latte\Engine;
         if (!self::getCssjsIsSet()) {
             $jsd = Html::el()->setHtml($template->renderToString(dirname(__FILE__) . '/templates/datetimeinputdynamic.js.latte'));
-            $jsutils = Html::el()->setHtml($template->renderToString(dirname(__FILE__) . '/templates/utils.js.latte')) . Html::el()->setHtml($template->renderToString(dirname(__FILE__) . '/templates/datetimeinput.js.latte'));
+            $jsutils =  Html::el()->setHtml($template->renderToString(dirname(__FILE__) . '/templates/datetimeinput.js.latte'));
             ;
             $css = Html::el('link')->addAttributes(['type' => 'text/css', 'rel' => 'stylesheet'])->setHref('/assets/vendor/pikaday-time/css/pikaday.css');
             if ($this->getTheme()) {

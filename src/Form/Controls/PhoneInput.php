@@ -4,6 +4,7 @@ namespace DekApps\Form\Controls;
 
 use Nette\Forms\Controls\BaseControl as BaseControl,
     Nette\Utils\Strings,
+    Nette\Utils\Html,
     Nette\Forms\Form;
 
 class PhoneInput extends BaseControl
@@ -383,7 +384,13 @@ class PhoneInput extends BaseControl
 
     public function getControl()
     {
-        return $this->getControlPart(static::NAME_PREFIX) . $this->getControlPart(static::NAME_NUMBER);
+        $s = '';
+        if (!self::getCssjsIsSet()) {
+            $template = new \Latte\Engine;
+            $s .= Html::el()->setHtml($template->renderToString(dirname(__FILE__) . '/templates/phoneinput.js.latte'));
+            self::setCssjsIsSet(true);
+        }
+        return $s . $this->getControlPart(static::NAME_PREFIX) . $this->getControlPart(static::NAME_NUMBER);
     }
 
     /**
@@ -427,7 +434,7 @@ class PhoneInput extends BaseControl
 
     public function getLabelPart()
     {
-        return NULL;
+        return null;
     }
 
     /**

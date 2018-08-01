@@ -1,0 +1,14 @@
+
+
+{block content}
+<script type="text/javascript" n:syntax="off">
+    (function (Nette) {
+        "use strict";
+        Nette.validators["DekAppsFormControlsPhoneInput_validatePhoneNumber"] = function (elem, arg, val) {
+            var phoneno = /^\d{9,10}$/;
+            return !(val !== '' && val !== false && val !== null) || val.match(phoneno) !== null;
+        };
+
+    })(Nette);
+
+</script>

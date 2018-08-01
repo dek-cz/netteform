@@ -5,9 +5,23 @@ namespace DekApps\Form;
 use Nette;
 use Nette\Forms\Rendering\DefaultFormRenderer;
 use Nette\Forms\Controls;
+use Nette\Utils\Html;
 
 class Renderer extends DefaultFormRenderer
 {
+
+    /** js load controling */
+    private static $jsIsSet = false;
+
+    public static function getJsIsSet()
+    {
+        return self::$jsIsSet;
+    }
+
+    public static function setJsIsSet($jsIsSet)
+    {
+        self::$jsIsSet = $jsIsSet;
+    }
 
     public function __construct()
     {
@@ -29,7 +43,13 @@ class Renderer extends DefaultFormRenderer
     public function renderBegin()
     {
         $this->form->getElementPrototype()->setRole('form');
-        return parent::renderBegin();
+        $s = '';
+        if (!self::getJsIsSet()) {
+            $template = new \Latte\Engine;
+            $s .= Html::el()->setHtml($template->renderToString(dirname(__FILE__) . '/Controls/templates/utils.js.latte'));
+            self::setJsIsSet(true);
+        }
+        return $s . parent::renderBegin();
     }
 
     public function attachForm(Nette\Forms\Form $form)
@@ -83,14 +103,4 @@ class Renderer extends DefaultFormRenderer
         return $body->setHtml($el . $description . $err);
     }
 
-//
-//    public function renderErrors(Nette\Forms\IControl $control = NULL, $own = TRUE)
-//    {
-//        $c = parent::renderErrors($control, $own);
-//        if ($c && $own) {
-////            $control->setHtmlAttribute('class','error');
-//            var_dump($c, $control->getControl()->class('error'));exit;
-//        }
-//        return $c;
-//    }
 }
