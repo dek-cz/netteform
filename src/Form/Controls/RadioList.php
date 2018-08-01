@@ -31,7 +31,49 @@ class RadioList extends BaseChControl
 
     public function getLabel($caption = NULL)
     {
-        return $caption ? \Nette\Utils\Html::el('div')->setClass('dek-choice-list')->setText($this->translate($caption)) : '';
+        return $caption ? \Nette\Utils\Html::el('div')->setClass('dek-choice-list-label')->setText($this->translate($caption)) : '';
+    }
+
+    public function setValue($value)
+    {
+        foreach ($this->getItems() as $item) {
+            if ($item->getValue() == $value) {
+                $item->setChecked(true);
+                break;
+            }
+        }
+        $this->value = $value;
+        return $this;
+    }
+
+    public function setRequired($value = TRUE)
+    {
+        foreach ($this->getItems() as $item) {
+            $item->setRequired($value);
+        }
+        return $this;
+    }
+
+    /**
+     * Returns selected value.
+     * @return mixed
+     */
+    public function getSelectedItem()
+    {
+        $value = $this->getValue();
+        foreach ($this->getItems() as $item) {
+            if ($item->getValue() === $value) {
+                return $item;
+            }
+        }
+        return null;
+    }
+
+
+    public function loadHttpData()
+    {
+        $val = $this->getHttpData(\Nette\Forms\Form::DATA_LINE);
+        $this->setValue($val);
     }
 
 }

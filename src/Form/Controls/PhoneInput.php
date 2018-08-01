@@ -414,6 +414,7 @@ class PhoneInput extends BaseControl
             if ($this->disabled) {
                 $control->disabled($this->disabled);
             }
+            $control->addAttributes(['data-nette-rules' => \Nette\Forms\Helpers::exportRules($this->rules) ?: NULL]);
 
             $err = $this->getErrors();
             if ($err) {

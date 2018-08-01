@@ -2,5 +2,208 @@
 
 {block content}
 <script type="text/javascript" n:syntax="off" >
-function r(f){/in/.test(document.readyState)?setTimeout('r('+f+')',9):f()};
+    function r(f) {
+        /in/.test(document.readyState) ? setTimeout('r(' + f + ')', 9) : f()
+    }
+    ;
+
+
+    Nette.closest = function (el, selector) {
+        if (el.parentNode) {
+            var node = el.parentNode.querySelector(selector);
+            if (node) {
+                return node;
+            } else {
+                return Nette.closest(el.parentNode, selector);
+            }
+        } else {
+            return null;
+        }
+    }
+
+
+    /**
+     * Validates single rule.
+     */
+    Nette.validateRule = function (elem, op, arg) {
+        var val = Nette.getValue(elem);
+
+        if (elem && elem.getAttribute) {
+            if (val === elem.getAttribute('data-nette-empty-value')) {
+                val = '';
+            }
+        }
+
+        if (op.charAt(0) === ':') {
+            op = op.substr(1);
+        }
+        op = op.replace('::', '_');
+        op = op.replace(/\\/g, '');
+
+        return Nette.validators[op] ? Nette.validators[op](elem, arg, val) : null;
+    };
+
+
+
+    /**
+     * Validates form element against given rules.
+     */
+    Nette.validateControl = function (elem, rules, onlyCheck) {
+        rules = rules || Nette.parseJSON(elem.getAttribute('data-nette-rules'));
+        for (var id = 0, len = rules.length; id < len; id++) {
+            var rule = rules[id], op = rule.op.match(/(~)?([^?]+)/);
+            rule.neg = op[1];
+            rule.op = op[2];
+            rule.condition = !!rule.rules;
+            var el = rule.control ? elem.form.elements[rule.control] : elem;
+
+            var success = Nette.validateRule(el, rule.op, rule.arg);
+            if (success === null) {
+                continue;
+            }
+            if (rule.neg) {
+                success = !success;
+            }
+
+            if (rule.condition && success) {
+                if (!Nette.validateControl(elem, rule.rules, onlyCheck)) {
+                    return false;
+                }
+            } else if (!rule.condition && !success) {
+                if (el.disabled) {
+                    continue;
+                }
+                if (!onlyCheck) {
+                    Nette.addError(el, rule.msg.replace('%value', Nette.getValue(el)));
+                }
+                return false;
+            } else {
+                Nette.removeError(elem);
+            }
+        }
+        return true;
+    };
+
+
+
+
+
+    Nette.hasClass = function (ele, cls) {
+        return !!ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+    }
+
+    Nette.addClass = function (ele, cls) {
+        if (!Nette.hasClass(ele, cls)) {
+            ele.className += " " + cls;
+        }
+    }
+
+    Nette.removeClass = function (ele, cls) {
+        if (Nette.hasClass(ele, cls)) {
+            var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+            ele.className = ele.className.replace(reg, ' ');
+        }
+    }
+
+
+    Nette.insertAfter = function (newNode, referenceNode) {
+        referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+    }
+
+
+    /**
+     * @override
+     * Display error message.
+     */
+    Nette.addError = function (elem, message) {
+        if (elem.focus) {
+            elem.focus();
+        }
+        if (message) {
+            Nette.addClass(elem, 'error');
+            if (elem.type === 'checkbox') {
+                var label = elem.parentNode,
+                        mask = label.querySelector('span.dek-checkbox__check');
+                if (mask) {
+                    Nette.addClass(mask, 'error');
+                    var error = label.nextSibling;
+                    error = error && error.nodeName == '#text' ? error.nextSibling : error;
+                    if (!(error && error.getAttribute('role') == 'alert' && error.innerHTML == message)) {
+                        var div = document.createElement("div");
+                        div.setAttribute('role', 'alert');
+                        div.innerHTML = message;
+                        Nette.insertAfter(div, label);
+                    }
+                }
+            } else if (elem.type === 'radio') {
+
+                var container = Nette.closest(elem, 'div.dek-choice-list');
+                var label = elem.parentNode,
+                        mask = label.querySelector('span.dek-radio__check');
+                if (container && mask) {
+                    Nette.addClass(mask, 'error');
+                    var error = container.nextSibling;
+                    error = error && error.nodeName == '#text' ? error.nextSibling : error;
+                    if (!(error && error.getAttribute('role') == 'alert' && error.innerHTML == message)) {
+                        var div = document.createElement("div");
+                        div.setAttribute('role', 'alert');
+                        div.innerHTML = message;
+                        Nette.insertAfter(div, container);
+                    }
+                }
+
+            } else {
+                var error = elem.nextSibling;
+                error = error && error.nodeName == '#text' ? error.nextSibling : error;
+                if (!(error && error.getAttribute('role') == 'alert' && error.innerHTML == message)) {
+                    var div = document.createElement("div");
+                    div.setAttribute('role', 'alert');
+                    div.innerHTML = message;
+                    Nette.insertAfter(div, elem);
+                }
+            }
+        }
+    };
+    Nette.removeError = function (elem) {
+
+        if (elem.type === 'checkbox') {
+            var label = elem.parentNode,
+                    mask = label.querySelector('span.dek-checkbox__check');
+            if (mask) {
+                Nette.removeClass(mask, 'error');
+                var error = label.nextSibling;
+                error = error && error.nodeName == '#text' ? error.nextSibling : error;
+                if (error && error.getAttribute('role') == 'alert') {
+                    error.parentNode.removeChild(error);
+
+                }
+            }
+
+        } else if (elem.type === 'radio') {
+
+            var container = Nette.closest(elem, 'div.dek-choice-list');
+            var label = elem.parentNode,
+                    mask = label.querySelector('span.dek-radio__check');
+            if (container && mask) {
+                Nette.removeClass(mask, 'error');
+                var error = container.nextSibling;
+                error = error && error.nodeName == '#text' ? error.nextSibling : error;
+                if (error && error.getAttribute('role') == 'alert') {
+                    error.parentNode.removeChild(error);
+
+                }
+            }
+            
+        } else {
+            Nette.removeClass(elem, 'error');
+            var error = elem.nextSibling;
+            error = error && error.nodeName == '#text' ? error.nextSibling : error;
+            if (error && error.getAttribute('role') == 'alert') {
+                error.parentNode.removeChild(error);
+
+            }
+        }
+    };
+
+
 </script>

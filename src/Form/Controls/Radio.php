@@ -26,8 +26,10 @@ class Radio extends BaseRadio
      * @var []
      */
     protected $textParams = [];
+    private $form;
+    private $checked = false;
 
-    public function __construct($name, $label = NULL )
+    public function __construct($name, $label = NULL, $form = null)
     {
         parent::__construct($label);
         $this->control->type = 'radio';
@@ -35,7 +37,8 @@ class Radio extends BaseRadio
         if ($name) {
             $this->radioName = $name;
         }
-        $this->control->id = 'rd-' . md5(rand(0, 999) .$this->radioName. microtime(true));
+        $this->control->id = 'rd-' . md5(rand(0, 999) . $this->radioName . microtime(true));
+        $this->form = $form;
     }
 
     public function setText($text)
@@ -115,6 +118,56 @@ class Radio extends BaseRadio
             return $this->getRadioName();
         }
         return parent::getHtmlName();
+    }
+
+    public function getForm($need = TRUE)
+    {
+        return $this->form;
+    }
+
+    public function setForm($form)
+    {
+        $this->form = $form;
+        return $this;
+    }
+
+    public function setValue($value)
+    {
+        if (!is_scalar($value) && $value !== NULL) {
+            throw new Nette\InvalidArgumentException(sprintf("Value must be scalar or NULL, %s given in field '%s'.", gettype($value), $this->name));
+        }
+        $this->value = $value;
+        return $this;
+    }
+
+    /**
+     * @return Html
+     */
+    public function getControlPart()
+    {
+
+        $this->setOption('rendered', TRUE);
+        $el = clone $this->control;
+        return $el->addAttributes(array(
+                    'name' => $this->getHtmlName(),
+                    'id' => $this->getHtmlId(),
+                    'required' => $this->isRequired(),
+                    'checked' => $this->getChecked(),
+                    'disabled' => $this->isDisabled(),
+                    'value' => $this->value,
+                    'data-nette-rules' => \Nette\Forms\Helpers::exportRules($this->rules) ?: NULL,
+        ));
+    }
+
+    public function getChecked()
+    {
+        return $this->checked;
+    }
+
+    public function setChecked($checked)
+    {
+        $this->checked = $checked;
+        return $this;
     }
 
 }

@@ -75,7 +75,7 @@ class Form extends BaseForm
     {
         return parent::addUpload($name, $label, $multiple)->setAttribute('role', 'dek-upload');
     }
-    
+
     /**
      * 
      * @param string $caption
@@ -84,6 +84,9 @@ class Form extends BaseForm
      */
     public function addRadios($caption = NULL, $items)
     {
+        foreach ($items as $i) {
+            $i->setForm($this);
+        }
         $fitem = reset($items);
         return ($this[$fitem->getRadioName()] = (new RadioList($caption, $items)));
     }
