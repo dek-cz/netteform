@@ -9,6 +9,7 @@ use Nette\Forms\Controls\BaseControl as BaseControl,
 
 class PhoneInput extends BaseControl
 {
+    use TWrapp;
 
     const NAME_PREFIX = 'phoneprefix',
             NAME_NUMBER = 'phonenumber',
@@ -382,8 +383,11 @@ class PhoneInput extends BaseControl
         $this->number = $this->getHttpData(Form::DATA_LINE, '[' . static::NAME_NUMBER . ']');
     }
 
-    public function getControl()
+    public function getControl($wrapp = true)
     {
+        if ($this->getDekWrapper() && $wrapp && $this->getForm() && $this->getForm()->getRenderer()) {
+            return $this->getForm()->getRenderer()->renderLabel($this) . $this->getForm()->getRenderer()->renderControl($this);
+        }
         $s = '';
         if (!self::getCssjsIsSet()) {
             $template = new \Latte\Engine;

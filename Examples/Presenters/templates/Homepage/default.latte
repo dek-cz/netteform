@@ -3,9 +3,22 @@
 
 {block content}
 <div id="banner">
-	<h1 n:block=title>Congratulations!</h1>
+    <h1 n:block=title>Congratulations!</h1>
 </div>
 
 <div id="content">
-	{control testForm}
+    {control testForm}
+<hr />
+<hr />
+    {form test2Form}
+        {input firstname}
+        {input surname}
+        {input title}
+        {input birthdate}
+        {input interviewdate}
+        {input phoneNum}
+        {input function}
+        {input country}
+        {input submit}
+    {/form}    
 </div>

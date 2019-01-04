@@ -3,10 +3,11 @@
 namespace DekApps\Form;
 
 use Nette\Application\UI\Form as BaseForm;
-use \DekApps\Form\Controls\Checkbox;
-use \DekApps\Form\Controls\RadioList;
-use \DekApps\Form\Controls\DateTimeInput;
-use \DekApps\Form\Controls\PhoneInput;
+use DekApps\Form\Controls\Checkbox;
+use DekApps\Form\Controls\RadioList;
+use DekApps\Form\Controls\DateTimeInput;
+use DekApps\Form\Controls\PhoneInput;
+use DekApps\Form\Controls\TextInput;
 use Nette\ComponentModel\IContainer;
 use Nette\Forms\IFormRenderer;
 use Nette\InvalidArgumentException;
@@ -19,6 +20,7 @@ class Form extends BaseForm
     {
         parent::__construct($container);
         $this->setRenderer(new Renderer);
+        $this->getElementPrototype()->setRole('form');
     }
 
     public function addSearchText($name, $caption = NULL, $cols = NULL, $maxLength = NULL)
@@ -33,7 +35,9 @@ class Form extends BaseForm
 
     public function addText($name, $caption = NULL, $cols = NULL, $maxLength = NULL)
     {
-        return parent::addText($name, $caption, $cols = NULL, $maxLength = NULL)->setAttribute('role', 'textbox');
+		$control = new TextInput($caption, $maxLength);
+		$control->setHtmlAttribute('size', $cols);
+		return $this[$name] = $control->setAttribute('role', 'textbox');
     }
 
     public function addCheckbox($name, $caption = NULL)

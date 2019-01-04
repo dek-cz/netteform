@@ -42,7 +42,6 @@ class Renderer extends DefaultFormRenderer
 
     public function renderBegin()
     {
-        $this->form->getElementPrototype()->setRole('form');
         $s = '';
         if (!self::getJsIsSet()) {
             $template = new \Latte\Engine;
@@ -92,7 +91,7 @@ class Renderer extends DefaultFormRenderer
         $control->setOption('rendered', TRUE);
         $err = $this->renderErrors($control);
 
-        $el = $control->getControl();
+        $el = $control->getControl(false);
         if ($el instanceof Html && $el->getName() === 'input') {
             $el->class($this->getValue("control .$el->type"), TRUE);
         }

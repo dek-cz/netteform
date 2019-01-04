@@ -7,6 +7,8 @@ use Nette\Forms\Controls\Checkbox as BaseRadio;
 class Radio extends BaseRadio
 {
 
+    use TWrapp;
+
     const TITLE = 'title';
     const TEXT = 'text';
 
@@ -72,8 +74,11 @@ class Radio extends BaseRadio
         return $this->text;
     }
 
-    public function getControl()
+    public function getControl($wrapp = true)
     {
+        if ($this->getDekWrapper() && $wrapp && $this->getForm() && $this->getForm()->getRenderer()) {
+            return $this->getForm()->getRenderer()->renderControl($this);
+        }
         $label = $this->getLabelPart();
         $label->setText('');
         $label->addClass('dek-radio');

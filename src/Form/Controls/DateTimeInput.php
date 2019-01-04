@@ -5,10 +5,13 @@ namespace DekApps\Form\Controls;
 use Nette\Forms\IControl,
     Nette\Utils\IHtmlString,
     Nette\Forms\Controls\BaseControl,
-    Nette\Utils\Html;
+    Nette\Utils\Html,
+    DekApps\Form\Renderer;
 
 class DateTimeInput extends BaseControl
 {
+
+    use TWrapp;
     /*
      * types of datetime
      */
@@ -35,7 +38,7 @@ class DateTimeInput extends BaseControl
     protected $submitedValue = null;
 
     /** js,css load controling */
-    private static $cssjsIsSet = false;
+    private static $cssjsIsSet;
 
     /** date(time) php formats */
     private static $formats = array(
@@ -138,15 +141,24 @@ class DateTimeInput extends BaseControl
         return $this;
     }
 
-    public function getControl()
+    public function getControl($wrapp = true)
     {
-        $css = $js = $jsd = $jsutils = '';
+        if ($this->getDekWrapper() && $wrapp && $this->getForm() && $this->getForm()->getRenderer()) {
+            return $this->getForm()->getRenderer()->renderLabel($this) . $this->getForm()->getRenderer()->renderControl($this);
+        }
+
+        $global = $css = $js = $jsd = $jsutils = '';
         $c = parent::getControl();
         $php = $this->getPhpPartControl(parent::getControl());
         $template = new \Latte\Engine;
+        if (!Renderer::getJsIsSet()) {
+            $template = new \Latte\Engine;
+            $global .= Html::el()->setHtml($template->renderToString(dirname(__FILE__) . '/templates/utils.js.latte'));
+            Renderer::setJsIsSet(true);
+        }
         if (!self::getCssjsIsSet()) {
             $jsd = Html::el()->setHtml($template->renderToString(dirname(__FILE__) . '/templates/datetimeinputdynamic.js.latte'));
-            $jsutils =  Html::el()->setHtml($template->renderToString(dirname(__FILE__) . '/templates/datetimeinput.js.latte'));
+            $jsutils = Html::el()->setHtml($template->renderToString(dirname(__FILE__) . '/templates/datetimeinput.js.latte'));
             ;
             $css = Html::el('link')->addAttributes(['type' => 'text/css', 'rel' => 'stylesheet'])->setHref('/assets/vendor/pikaday-time/css/pikaday.css');
             if ($this->getTheme()) {
@@ -155,9 +167,9 @@ class DateTimeInput extends BaseControl
             $js = Html::el('script')->addAttributes(['type' => 'text/javascript'])->setSrc('/assets/vendor/pikaday-time/pikaday.js');
             self::setCssjsIsSet(true);
         } else {
-            $jsd = Html::el()->setHtml($template->renderToString(dirname(__FILE__) . '/templates/datetimeinputdynamic.js.latte'));
+//            $jsd = Html::el()->setHtml($template->renderToString(dirname(__FILE__) . '/templates/datetimeinputdynamic.js.latte'));
         }
-        return $css . $jsutils . $js . $jsd . $php;
+        return $global . $css . $jsutils . $js . $jsd . $php;
     }
 
     public function getPhpPartControl(IHtmlString $control)

@@ -7,6 +7,8 @@ use Nette\Forms\Controls\ChoiceControl as BaseChControl;
 class RadioList extends BaseChControl
 {
 
+    use TWrapp;
+
     private $mainLabel = null;
 
     public function __construct($label = NULL, array $items = NULL)
@@ -15,8 +17,11 @@ class RadioList extends BaseChControl
         parent::__construct(null, $items);
     }
 
-    public function getControl()
+    public function getControl($wrapp = true)
     {
+        if ($this->getDekWrapper() && $wrapp && $this->getForm() && $this->getForm()->getRenderer()) {
+            return $this->getForm()->getRenderer()->renderControl($this);
+        }
         $label = '';
         if ($this->mainLabel) {
             $label = $this->getLabel($this->mainLabel);
@@ -68,7 +73,6 @@ class RadioList extends BaseChControl
         }
         return null;
     }
-
 
     public function loadHttpData()
     {
