@@ -34,7 +34,7 @@ class Renderer extends DefaultFormRenderer
         $this->wrappers['control']['container'] = null;
         $this->wrappers['control']['errorcontainer'] = null;
         $this->wrappers['control']['erroritem'] = 'div role=alert';
-        $this->wrappers['comboinputpair']['container'] = 'div';
+        $this->wrappers['comboinputpair']['container'] = 'div style="display: flex;"';
         $this->wrappers['comboinputpair']['.primaryClass'] = 'dek-input-phone';
         $this->wrappers['choicelist']['container'] = 'div';
         $this->wrappers['choicelist']['.primaryClass'] = 'dek-choice-list';

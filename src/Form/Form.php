@@ -25,12 +25,12 @@ class Form extends BaseForm
 
     public function addSearchText($name, $caption = NULL, $cols = NULL, $maxLength = NULL)
     {
-        return parent::addText($name, $caption, $cols = NULL, $maxLength = NULL)->setAttribute('role', 'textbox')->setAttribute('type', 'search');
+        return $this->addText($name, $caption, $cols = NULL, $maxLength = NULL)->setAttribute('role', 'textbox')->setAttribute('type', 'search');
     }
 
     public function addEmailText($name, $caption = NULL, $cols = NULL, $maxLength = NULL)
     {
-        return parent::addText($name, $caption, $cols = NULL, $maxLength = NULL)->setAttribute('role', 'textbox')->setAttribute('type', 'email');
+        return $this->addText($name, $caption, $cols = NULL, $maxLength = NULL)->setAttribute('role', 'textbox')->setAttribute('type', 'email');
     }
 
     public function addText($name, $caption = NULL, $cols = NULL, $maxLength = NULL)

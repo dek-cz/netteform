@@ -407,10 +407,11 @@ class PhoneInput extends BaseControl
         $name = $this->getHtmlName();
         if ($key === static::NAME_PREFIX) {
             $control = \Nette\Forms\Helpers::createSelectBox(
-                            array_combine(static::$phonePrefixes, static::$phonePrefixes), array(
-                        'selected?' => $this->prefix === NULL ? $this->defaultPrefix : $this->prefix,
-                            )
+                            array_combine(static::$phonePrefixes, static::$phonePrefixes), [
+                        'selected?' => $this->prefix === NULL ? $this->defaultPrefix : $this->prefix
+                            ]
             );
+            $control->addAttributes(['style'=>'margin-top: 5px;']);
             $control->setRole('combobox');
             $control->name($name . '[' . static::NAME_PREFIX . ']')->id($this->getHtmlId());
             if ($this->disabled) {
