@@ -3,9 +3,9 @@
 <script type="text/javascript" n:syntax="off">
 
 	r(function () {
-		var inputs = document.getElementsByTagName("input");
+		var inputs = document.querySelectorAll('[type="dekdate"]');
 		for (i in inputs) {
-			if (!inputs[i].getAttribute) {
+			if (!inputs[i].getAttribute || inputs[i].getAttribute("pickaday-initialized") === "1") {
 				continue;
 			}
 			var isdatetime = inputs[i].getAttribute("data-dateinput-type");
@@ -37,6 +37,7 @@
 									toString: toString,
 									parse: parser
 								});
+								field.setAttribute("pickaday-initialized", "1");
 				if (p.defaultDate === undefined) {
 					var d1 = null, d2 = null;
 					if (field.getAttribute("pickaday-rangeMin")) {
