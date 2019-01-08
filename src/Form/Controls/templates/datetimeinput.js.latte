@@ -105,6 +105,10 @@
 			var parsers = PickadayUtils.getParsers(elem);
 			return Nette.isArray(arg) ? ((arg[0] === null || parsers.parser(val) >= parsers.parser(arg[0])) && (arg[1] === null || parsers.parser(val) <= parsers.parser(arg[1]))) : null;
 		};
+		Nette.validators["DekAppsFormControlsDateTimeInput_validateDateInputMin"] = function (elem, arg, val) {
+			var parsers = PickadayUtils.getParsers(elem);
+			return Nette.isArray(arg) ? ((arg[0] === null || parsers.parser(val) >= parsers.parser(arg[0]))) : null;
+		};
 	})(Nette);
 
 	if (typeof PickadayUtils === 'undefined') {

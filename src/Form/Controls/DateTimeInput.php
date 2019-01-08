@@ -229,6 +229,11 @@ class DateTimeInput extends BaseControl
             $arg[0] = $this->formatDate($arg[0]);
             $arg[1] = $this->formatDate($arg[1]);
         }
+        if ($operation === \Nette\Forms\Form::MIN) {
+            $this->range['min'] = $this->normalizeDate($arg[0]);
+            $arg[0] = $this->formatDate($arg[0]);
+            $operation = __CLASS__ . '::validateDateInputMin';
+        }
         return parent::addRule($operation, $message, $arg);
     }
 
