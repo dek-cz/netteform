@@ -255,6 +255,16 @@ class DateTimeInput extends BaseControl
         return self::validateValid($control);
     }
 
+    /**
+     * Valid validator: is control valid?
+     * @param  IControl
+     * @return bool
+     */
+    public static function validateDateInputMin(IControl $control)
+    {
+        return self::validateValid($control);
+    }
+
     public static function validateValid(IControl $control)
     {
         if (!$control instanceof self) {
