@@ -39,7 +39,6 @@
         }
         op = op.replace('::', '_');
         op = op.replace(/\\/g, '');
-        console.log(elem, op);
         return Nette.validators[op] ? Nette.validators[op](elem, arg, val) : null;
     };
 
