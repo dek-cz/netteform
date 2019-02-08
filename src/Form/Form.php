@@ -6,6 +6,7 @@ use Nette\Application\UI\Form as BaseForm;
 use DekApps\Form\Controls\Checkbox;
 use DekApps\Form\Controls\RadioList;
 use DekApps\Form\Controls\DateTimeInput;
+use DekApps\Form\Controls\Calendar;
 use DekApps\Form\Controls\PhoneInput;
 use DekApps\Form\Controls\TextInput;
 use Nette\ComponentModel\IContainer;
