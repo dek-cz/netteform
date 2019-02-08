@@ -45,6 +45,11 @@ class Form extends BaseForm
         return ($this[$name] = (new Checkbox($caption)));
     }
 
+    public function addCalendar($name, $caption = NULL)
+    {
+        return ($this[$name] = (new Calendar($caption))->setAttribute('role', 'textbox'));
+    }
+
     public function addDateTimeInput($name, $caption = NULL, $type = DateTimeInput::TYPE_DATETIME_NOSEC)
     {
         return ($this[$name] = (new DateTimeInput($caption, $type))->setAttribute('role', 'textbox'));
