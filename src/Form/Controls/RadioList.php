@@ -22,11 +22,8 @@ class RadioList extends BaseChControl
         if ($this->getDekWrapper() && $wrapp && $this->getForm() && $this->getForm()->getRenderer()) {
             return $this->getForm()->getRenderer()->renderControl($this);
         }
-        $label = '';
-        if ($this->mainLabel) {
-            $label = $this->getLabel($this->mainLabel);
-        }
-        $res = $label;
+
+        $res = '';
         foreach ($this->getItems() as $item) {
             $res .= $item->getControl();
         }
@@ -36,7 +33,7 @@ class RadioList extends BaseChControl
 
     public function getLabel($caption = NULL)
     {
-        return $caption ? \Nette\Utils\Html::el('div')->setClass('dek-choice-list-label')->setText($this->translate($caption)) : '';
+        return \Nette\Utils\Html::el('div')->setClass('dek-radio-list-label')->setText($this->translate($caption === null ? $this->mainLabel : $caption));
     }
 
     public function setValue($value)
@@ -49,6 +46,11 @@ class RadioList extends BaseChControl
         }
         $this->value = $value;
         return $this;
+    }
+
+    public function getValue()
+    {
+        return $this->value;
     }
 
     public function setRequired($value = TRUE)

@@ -82,6 +82,9 @@ class Radio extends BaseRadio
         $label = $this->getLabelPart();
         $label->setText('');
         $label->addClass('dek-radio');
+        if($this->isDisabled()) {
+            $label->addClass('disabled');
+        }
         $label->insert(0, $this->getControlPart());
         $label->insert(1, \Nette\Utils\Html::el('span')->setClass('dek-radio__check'));
         $label->insert(2, \Nette\Utils\Html::el('span')->setClass('dek-radio__label')->setText($this->translate($this->caption), isset($this->textParams[self::TITLE]) ? $this->textParams[self::TITLE] : []));
@@ -160,7 +163,7 @@ class Radio extends BaseRadio
                     'checked' => $this->getChecked(),
                     'disabled' => $this->isDisabled(),
                     'value' => $this->value,
-                    'data-nette-rules' => \Nette\Forms\Helpers::exportRules($this->rules) ?: NULL,
+                    'data-nette-rules' => \Nette\Forms\Helpers::exportRules($this->getRules()) ?: NULL,
         ));
     }
 
@@ -169,6 +172,10 @@ class Radio extends BaseRadio
         return $this->checked;
     }
 
+    /**
+     * @param bool $checked
+     * @return $this
+     */
     public function setChecked($checked)
     {
         $this->checked = $checked;
