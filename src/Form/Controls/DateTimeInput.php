@@ -247,7 +247,7 @@ class DateTimeInput extends BaseControl
 
     /**
      * Valid validator: is control valid?
-     * @param  IControl
+     * @param  IControl $control
      * @return bool
      */
     public static function validateDateInputValid(IControl $control)
@@ -257,7 +257,7 @@ class DateTimeInput extends BaseControl
 
     /**
      * Valid validator: is control valid?
-     * @param  IControl
+     * @param  IControl $control
      * @return bool
      */
     public static function validateDateInputMin(IControl $control)
@@ -275,7 +275,6 @@ class DateTimeInput extends BaseControl
 
     /**
      * @param self $control
-     * @param array $args
      * @return bool
      */
     public static function validateDateInputRange(self $control)

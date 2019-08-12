@@ -147,7 +147,7 @@ class Radio extends BaseRadio
     public function setValue($value)
     {
         if (!is_scalar($value) && $value !== NULL) {
-            throw new Nette\InvalidArgumentException(sprintf("Value must be scalar or NULL, %s given in field '%s'.", gettype($value), $this->name));
+            throw new \Nette\InvalidArgumentException(sprintf("Value must be scalar or NULL, %s given in field '%s'.", gettype($value), $this->name));
         }
         $this->value = $value;
         return $this;

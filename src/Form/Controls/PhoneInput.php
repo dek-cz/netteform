@@ -318,7 +318,7 @@ class PhoneInput extends BaseControl
 
     /**
      * @param string
-     * @return \Nella\Forms\Phone\PhoneNumberInput
+     * @return $this
      * @throws \Nette\InvalidArgumentException
      */
     public function setValue($value)
@@ -358,7 +358,7 @@ class PhoneInput extends BaseControl
 
     /**
      * @param string
-     * @return \Nella\Forms\Phone\PhoneNumberInput
+     * @return $this
      */
     public function setDefaultPrefix($prefix)
     {
@@ -398,8 +398,8 @@ class PhoneInput extends BaseControl
     }
 
     /**
-     * @param string
-     * @return \Nette\Utils\Html
+     * @param string $key
+     * @return Html
      * @throws \Nette\InvalidArgumentException
      */
     public function getControlPart($key)
@@ -419,7 +419,7 @@ class PhoneInput extends BaseControl
             }
             return $control;
         } elseif ($key === static::NAME_NUMBER) {
-            $control = \Nette\Utils\Html::el('input')->name($name . '[' . static::NAME_NUMBER . ']');
+            $control = Html::el('input')->name($name . '[' . static::NAME_NUMBER . ']');
             $control->value($this->number);
             $control->type('tel');
             $control->setRole('textbox');

@@ -58,7 +58,7 @@ class Renderer extends DefaultFormRenderer
 
     /**
      * Renders 'control' part of visual row of controls.
-     * @return string
+     * @return Html
      */
     public function renderControl(Nette\Forms\IControl $control)
     {
