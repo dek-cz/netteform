@@ -3,6 +3,7 @@
 namespace DekApps\Form\Controls;
 
 use Nette\Forms\Controls\Checkbox as BaseRadio;
+use Nette\Utils\Html;
 
 class Radio extends BaseRadio
 {
@@ -76,7 +77,7 @@ class Radio extends BaseRadio
         return $this->text;
     }
 
-    public function getControl($wrap = true)
+    public function getControl($wrap = true): Html
     {
         if ($this->getDekWrapper() && $wrap && $this->getForm() && $this->getForm()->getRenderer()) {
             return $this->getForm()->getRenderer()->renderControl($this);
@@ -125,7 +126,7 @@ class Radio extends BaseRadio
         return $this;
     }
 
-    public function getHtmlName()
+    public function getHtmlName(): string
     {
         if ($this->getRadioName()) {
             return $this->getRadioName();
@@ -133,7 +134,7 @@ class Radio extends BaseRadio
         return parent::getHtmlName();
     }
 
-    public function getForm($need = TRUE)
+    public function getForm(bool $need = TRUE): \Nette\Forms\Form
     {
         return $this->form;
     }
@@ -156,7 +157,7 @@ class Radio extends BaseRadio
     /**
      * @return Html
      */
-    public function getControlPart()
+    public function getControlPart(): Html
     {
 
         $this->setOption('rendered', TRUE);

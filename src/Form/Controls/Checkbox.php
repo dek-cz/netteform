@@ -3,6 +3,7 @@
 namespace DekApps\Form\Controls;
 
 use \Nette\Forms\Controls\Checkbox as BaseCheckBox;
+use Nette\Utils\Html;
 
 class Checkbox extends BaseCheckBox
 {
@@ -63,7 +64,7 @@ class Checkbox extends BaseCheckBox
         return $this->text;
     }
 
-    public function getControl($wrap = true)
+    public function getControl($wrap = true): Html
     {
         if ($this->getDekWrapper() && $wrap && $this->getForm() && $this->getForm()->getRenderer()) {
             return $this->getForm()->getRenderer()->renderControl($this);

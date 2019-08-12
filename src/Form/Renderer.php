@@ -40,7 +40,7 @@ class Renderer extends DefaultFormRenderer
         $this->wrappers['choicelist']['.primaryClass'] = 'dek-choice-list';
     }
 
-    public function renderBegin()
+    public function renderBegin(): string
     {
         $s = '';
         if (!self::getJsIsSet()) {
@@ -60,7 +60,7 @@ class Renderer extends DefaultFormRenderer
      * Renders 'control' part of visual row of controls.
      * @return Html
      */
-    public function renderControl(Nette\Forms\IControl $control)
+    public function renderControl(Nette\Forms\IControl $control): Html
     {
         if ($control instanceof \DekApps\Form\Controls\PhoneInput) {
             $body = $this->getWrapper('comboinputpair container');

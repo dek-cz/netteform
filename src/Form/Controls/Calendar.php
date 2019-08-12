@@ -12,10 +12,10 @@ class Calendar extends TextInput
 {
     use TWrapp;
     
-    public function getControl($wrap = true)
+    public function getControl($wrap = true): Html
     {
         if ($this->getDekWrapper() && $wrap && $this->getForm() && $this->getForm()->getRenderer()) {
-            return $this->getForm()->getRenderer()->renderLabel($this) . $this->getForm()->getRenderer()->renderControl($this);
+            return Html::el()->setHtml($this->getForm()->getRenderer()->renderLabel($this) . $this->getForm()->getRenderer()->renderControl($this));
         }
 
         $inputHmtl = parent::getControl();
@@ -31,7 +31,6 @@ class Calendar extends TextInput
             $inputHmtl->class('error', true);
             $script = "<script>(function(){var el = document.getElementById('$inputHmtl->id');el.setCustomValidity('$errorMessage');el.removeAttribute('readonly');el.reportValidity();})();</script>";
         }
-        
-        return Html::el()->setHtml($template->renderToString(dirname(__FILE__) . '/templates/calendar.js.latte')) . $inputHmtl.$script;
+        return (Html::el()->setHtml($template->renderToString(dirname(__FILE__) . '/templates/calendar.js.latte')))->addHtml($inputHmtl)->addHtml($script);
     }
 }

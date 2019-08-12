@@ -372,12 +372,12 @@ class PhoneInput extends BaseControl
     /**
      * @return bool
      */
-    public function isFilled()
+    public function isFilled(): bool
     {
         return !empty($this->number);
     }
 
-    public function loadHttpData()
+    public function loadHttpData(): void
     {
         $this->prefix = $this->getHttpData(Form::DATA_LINE, '[' . static::NAME_PREFIX . ']');
         $this->number = $this->getHttpData(Form::DATA_LINE, '[' . static::NAME_NUMBER . ']');
@@ -394,7 +394,7 @@ class PhoneInput extends BaseControl
             $s .= Html::el()->setHtml($template->renderToString(dirname(__FILE__) . '/templates/phoneinput.js.latte'));
             self::setCssjsIsSet(true);
         }
-        return $s . $this->getControlPart(static::NAME_PREFIX) . $this->getControlPart(static::NAME_NUMBER);
+        return $s . $this->getPart(static::NAME_PREFIX) . $this->getPart(static::NAME_NUMBER);
     }
 
     /**
@@ -402,7 +402,7 @@ class PhoneInput extends BaseControl
      * @return Html
      * @throws \Nette\InvalidArgumentException
      */
-    public function getControlPart($key)
+    private function getPart($key): Html
     {
         $name = $this->getHtmlName();
         if ($key === static::NAME_PREFIX) {
@@ -437,7 +437,7 @@ class PhoneInput extends BaseControl
         throw new \Nette\InvalidArgumentException('Part ' . $key . ' does not exist');
     }
 
-    public function getLabelPart()
+    public function getLabelPart(): Html
     {
         return null;
     }

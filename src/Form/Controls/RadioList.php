@@ -76,7 +76,7 @@ class RadioList extends BaseChControl
         return null;
     }
 
-    public function loadHttpData()
+    public function loadHttpData(): void
     {
         $val = $this->getHttpData(\Nette\Forms\Form::DATA_LINE);
         $this->setValue($val);
