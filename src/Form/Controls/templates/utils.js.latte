@@ -5,7 +5,6 @@
     function r(f) {
         /in/.test(document.readyState) ? setTimeout('r(' + f + ')', 9) : f()
     }
-    ;
 
 
     Nette.closest = function (el, selector) {
@@ -19,7 +18,7 @@
         } else {
             return null;
         }
-    }
+    };
 
 
     /**
@@ -89,25 +88,25 @@
 
     Nette.hasClass = function (ele, cls) {
         return !!ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
-    }
+    };
 
     Nette.addClass = function (ele, cls) {
         if (!Nette.hasClass(ele, cls)) {
             ele.className += " " + cls;
         }
-    }
+    };
 
     Nette.removeClass = function (ele, cls) {
         if (Nette.hasClass(ele, cls)) {
             var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
             ele.className = ele.className.replace(reg, ' ');
         }
-    }
+    };
 
 
     Nette.insertAfter = function (newNode, referenceNode) {
         referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-    }
+    };
 
 
     /**
