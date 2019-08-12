@@ -17,9 +17,9 @@ class RadioList extends BaseChControl
         parent::__construct(null, $items);
     }
 
-    public function getControl($wrapp = true)
+    public function getControl($wrap = true)
     {
-        if ($this->getDekWrapper() && $wrapp && $this->getForm() && $this->getForm()->getRenderer()) {
+        if ($this->getDekWrapper() && $wrap && $this->getForm() && $this->getForm()->getRenderer()) {
             return $this->getForm()->getRenderer()->renderControl($this);
         }
 

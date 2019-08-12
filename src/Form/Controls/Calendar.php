@@ -12,9 +12,9 @@ class Calendar extends TextInput
 {
     use TWrapp;
     
-    public function getControl($wrapp = true)
+    public function getControl($wrap = true)
     {
-        if ($this->getDekWrapper() && $wrapp && $this->getForm() && $this->getForm()->getRenderer()) {
+        if ($this->getDekWrapper() && $wrap && $this->getForm() && $this->getForm()->getRenderer()) {
             return $this->getForm()->getRenderer()->renderLabel($this) . $this->getForm()->getRenderer()->renderControl($this);
         }
 
