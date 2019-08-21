@@ -36,9 +36,14 @@ class Form extends BaseForm
 
     public function addText($name, $caption = NULL, $cols = NULL, $maxLength = NULL)
     {
-		$control = new TextInput($caption, $maxLength);
-		$control->setHtmlAttribute('size', $cols);
-		return $this[$name] = $control->setAttribute('role', 'textbox');
+        $control = new TextInput($caption, $maxLength);
+        $control->setHtmlAttribute('size', $cols);
+        return $this[$name] = $control->setAttribute('role', 'textbox');
+    }
+
+    public function addPassword($name, $caption = NULL, $cols = NULL, $maxLength = NULL)
+    {
+        return $this->addText($name, $caption, $cols = NULL, $maxLength = NULL)->setAttribute('role', 'textbox')->setAttribute('type', 'password');
     }
 
     public function addCheckbox($name, $caption = NULL)
