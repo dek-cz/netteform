@@ -26,7 +26,7 @@
 		"nette/utils": "^3.0",
 		"nette/forms": "^3.0",
 		"nette/application": "^3.0",
-		"kdyby/translation": "^3.0", "nette/finder": "3.0.0-RC1 as 2.5.0",
+		"kdyby/translation": "^3.0",
 		"symfony/yaml": "3.4.11",
 		"bower-asset/pikaday-time": "dev-master"
 	},
