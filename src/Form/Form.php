@@ -33,9 +33,14 @@ class Form extends BaseForm
 
     public function addText(string $name, $caption = NULL, int $cols = NULL, int $maxLength = NULL): \Nette\Forms\Controls\TextInput
     {
-		$control = new TextInput($caption, $maxLength);
-		$control->setHtmlAttribute('size', $cols);
-		return $this[$name] = $control->setHtmlAttribute('role', 'textbox');
+        $control = new TextInput($caption, $maxLength);
+        $control->setHtmlAttribute('size', $cols);
+        return $this[$name] = $control->setHtmlAttribute('role', 'textbox');
+    }
+
+    public function addPassword(string $name, $caption = NULL, int $cols = NULL, int $maxLength = NULL): \Nette\Forms\Controls\TextInput
+    {
+        return $this->addText($name, $caption, $cols = NULL, $maxLength = NULL)->setHtmlAttribute('role', 'textbox')->setHtmlAttribute('type', 'password');
     }
 
     public function addCheckbox(string $name, $caption = NULL): \Nette\Forms\Controls\Checkbox
