@@ -10,7 +10,7 @@ class Checkbox extends BaseCheckBox
     use TWrapp;
 
     const TITLE = 'title';
-    const TEXT = 'text';
+    const TEXT  = 'text';
 
     /** @var string */
     protected $text;
@@ -63,14 +63,17 @@ class Checkbox extends BaseCheckBox
         return $this->text;
     }
 
-    public function getControl($wrap = true)
+    public function getControl($wrapp = true)
     {
-        if ($this->getDekWrapper() && $wrap && $this->getForm() && $this->getForm()->getRenderer()) {
+        if ($this->getDekWrapper() && $wrapp && $this->getForm() && $this->getForm()->getRenderer()) {
             return $this->getForm()->getRenderer()->renderControl($this);
         }
         $label = $this->getLabelPart();
         $label->setText('');
         $label->addClass('dek-checkbox');
+        if($this->hasErrors()) {
+            $label->addClass('error');
+        }
         $label->insert(0, $this->getControlPart());
         $label->insert(1, \Nette\Utils\Html::el('span')->setClass('dek-checkbox__check'));
         $label->insert(2, \Nette\Utils\Html::el('span')->setClass('dek-checkbox__label')->setText($this->translate($this->caption), isset($this->textParams[self::TITLE]) ? $this->textParams[self::TITLE] : []));
@@ -92,6 +95,16 @@ class Checkbox extends BaseCheckBox
     {
 
         $this->textParams[self::TEXT] = $params;
+        return $this;
+    }
+
+    /**
+     * @param bool $checked
+     * @return $this
+     */
+    public function setChecked($checked)
+    {
+        $this->checked = $checked;
         return $this;
     }
 
