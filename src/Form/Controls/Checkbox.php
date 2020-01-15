@@ -76,9 +76,9 @@ class Checkbox extends BaseCheckBox
         }
         $label->insert(0, $this->getControlPart());
         $label->insert(1, \Nette\Utils\Html::el('span')->setClass('dek-checkbox__check'));
-        $label->insert(2, \Nette\Utils\Html::el('span')->setClass('dek-checkbox__label')->setText($this->translate($this->caption), isset($this->textParams[self::TITLE]) ? $this->textParams[self::TITLE] : []));
+        $label->insert(2, \Nette\Utils\Html::el('span')->setClass('dek-checkbox__label')->setHtml($this->translate($this->caption), isset($this->textParams[self::TITLE]) ? $this->textParams[self::TITLE] : []));
         if ($this->text) {
-            $label->insert(3, \Nette\Utils\Html::el('span')->setClass('dek-checkbox__text')->setText($this->translate($this->text), isset($this->textParams[self::TEXT]) ? $this->textParams[self::TEXT] : []));
+            $label->insert(3, \Nette\Utils\Html::el('span')->setClass('dek-checkbox__text')->setHtml($this->translate($this->text), isset($this->textParams[self::TEXT]) ? $this->textParams[self::TEXT] : []));
         }
 
         return $this->getSeparatorPrototype()->setHtml($label);
