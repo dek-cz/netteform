@@ -92,9 +92,9 @@ class Radio extends BaseRadio
         if($this->icon) {
             $label->insert(2, \Nette\Utils\Html::el('img')->setAttribute('src', $this->icon));
         }
-        $label->insert(3, \Nette\Utils\Html::el('span')->setClass('dek-radio__label')->setText($this->translate($this->caption), isset($this->textParams[self::TITLE]) ? $this->textParams[self::TITLE] : []));
+        $label->insert(3, \Nette\Utils\Html::el('span')->setClass('dek-radio__label')->setHtml($this->translate($this->caption), isset($this->textParams[self::TITLE]) ? $this->textParams[self::TITLE] : []));
         if ($this->text) {
-            $label->insert(4, \Nette\Utils\Html::el('span')->setClass('dek-radio__text')->setText($this->translate($this->text), isset($this->textParams[self::TEXT]) ? $this->textParams[self::TEXT] : []));
+            $label->insert(4, \Nette\Utils\Html::el('span')->setClass('dek-radio__text')->setHtml($this->translate($this->text), isset($this->textParams[self::TEXT]) ? $this->textParams[self::TEXT] : []));
         }
 
         return $this->getSeparatorPrototype()->setHtml($label);
