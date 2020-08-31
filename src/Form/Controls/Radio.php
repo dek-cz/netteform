@@ -11,7 +11,7 @@ class Radio extends BaseRadio
     use TWrapp;
 
     const TITLE = 'title';
-    const TEXT  = 'text';
+    const TEXT = 'text';
 
     /** @var string */
     protected $radioName = '';
@@ -30,10 +30,9 @@ class Radio extends BaseRadio
      */
     protected $textParams = [];
     private $form;
-    private $checked      = false;
-
+    private $checked = false;
     private $icon;
-    
+
     public function __construct($name, $label = NULL, $form = null)
     {
         parent::__construct($label);
@@ -43,7 +42,7 @@ class Radio extends BaseRadio
             $this->radioName = $name;
         }
         $this->control->id = 'rd-' . md5(rand(0, 999) . $this->radioName . microtime(true));
-        $this->form        = $form;
+        $this->form = $form;
     }
 
     public function setText($text)
@@ -88,9 +87,9 @@ class Radio extends BaseRadio
         if ($this->isDisabled()) {
             $label->addClass('disabled');
         }
-        $label->insert(0, $this->getControlPart()); 
+        $label->insert(0, $this->getControlPart());
         $label->insert(1, \Nette\Utils\Html::el('span')->setClass('dek-radio__check'));
-        if($this->icon) {
+        if ($this->icon) {
             $label->insert(2, \Nette\Utils\Html::el('img')->setAttribute('src', $this->icon));
         }
         $label->insert(3, \Nette\Utils\Html::el('span')->setClass('dek-radio__label')->setHtml($this->translate($this->caption), isset($this->textParams[self::TITLE]) ? $this->textParams[self::TITLE] : []));
@@ -163,13 +162,13 @@ class Radio extends BaseRadio
         $this->setOption('rendered', TRUE);
         $el = clone $this->control;
         return $el->addAttributes(array(
-                'name'             => $this->getHtmlName(),
-                'id'               => $this->getHtmlId(),
-                'required'         => $this->isRequired(),
-                'checked'          => $this->getChecked(),
-                'disabled'         => $this->isDisabled(),
-                'value'            => $this->value,
-                'data-nette-rules' => \Nette\Forms\Helpers::exportRules($this->getRules()) ?: NULL,
+                    'name' => $this->getHtmlName(),
+                    'id' => $this->getHtmlId(),
+                    'required' => $this->isRequired(),
+                    'checked' => $this->getChecked(),
+                    'disabled' => $this->isDisabled(),
+                    'value' => $this->value,
+                    'data-nette-rules' => \Nette\Forms\Helpers::exportRules($this->getRules()) ?: NULL,
         ));
     }
 
@@ -195,6 +194,22 @@ class Radio extends BaseRadio
     public function setIcon(string $icon)
     {
         $this->icon = $icon;
+        return $this;
+    }
+
+    /**
+     * Disables or enables control.
+     * @param  bool  $value
+     * @return static
+     */
+    public function setDisabled($value = true)
+    {
+        if ($this->disabled = (bool) $value) {
+            //not if radio
+            //$this->setValue(null);
+        } elseif (($form = $this->getForm(false)) && $form->isAnchored() && $form->isSubmitted()) {
+            $this->loadHttpData();
+        }
         return $this;
     }
 
