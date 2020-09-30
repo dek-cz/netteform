@@ -161,15 +161,19 @@ class Radio extends BaseRadio
 
         $this->setOption('rendered', TRUE);
         $el = clone $this->control;
-        return $el->addAttributes(array(
-                    'name' => $this->getHtmlName(),
-                    'id' => $this->getHtmlId(),
-                    'required' => $this->isRequired(),
-                    'checked' => $this->getChecked(),
-                    'disabled' => $this->isDisabled(),
-                    'value' => $this->value,
-                    'data-nette-rules' => \Nette\Forms\Helpers::exportRules($this->getRules()) ?: NULL,
-        ));
+        $attr = array(
+            'name' => $this->getHtmlName(),
+            'id' => $this->getHtmlId(),
+            'required' => $this->isRequired(),
+//                    'checked' => $this->getChecked()?'checked':'',
+            'disabled' => $this->isDisabled(),
+            'value' => $this->value,
+            'data-nette-rules' => \Nette\Forms\Helpers::exportRules($this->getRules()) ?: NULL,
+        );
+        if ($this->getChecked()) {
+            $attr['checked'] = 'checked';
+        }
+        return $el->addAttributes($attr);
     }
 
     public function getChecked()
