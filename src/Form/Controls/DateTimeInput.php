@@ -17,15 +17,14 @@ class DateTimeInput extends BaseControl
      */
 
     const TYPE_DATETIME = 'dekdatetime',
-            TYPE_DATETIME_NOSEC = 'dekdatetimenosec',
-            TYPE_DATE = 'dekdate';
-
+        TYPE_DATETIME_NOSEC = 'dekdatetimenosec',
+        TYPE_DATE = 'dekdate';
 
     /*
      * css theme const
      */
     const DARKTHEME = 'dark-theme',
-            TRIANGLETHEME = 'triangle-theme';
+        TRIANGLETHEME = 'triangle-theme';
     const VALIDDATE = __CLASS__ . '::validateDateInputValid';
 
     /** @var string */
@@ -160,11 +159,11 @@ class DateTimeInput extends BaseControl
             $jsd = Html::el()->setHtml($template->renderToString(dirname(__FILE__) . '/templates/datetimeinputdynamic.js.latte'));
             $jsutils = Html::el()->setHtml($template->renderToString(dirname(__FILE__) . '/templates/datetimeinput.js.latte'));
             ;
-            $css = Html::el('link')->addAttributes(['type' => 'text/css', 'rel' => 'stylesheet'])->setHref('/assets/vendor/pikaday-time/css/pikaday.css');
+            $css = Html::el('link')->addAttributes(['type' => 'text/css', 'rel' => 'stylesheet'])->setHref('https://cdn.jsdelivr.net/gh/dek-cz/Pikaday/css/pikaday.css');
             if ($this->getTheme()) {
-                $css .= Html::el('link')->addAttributes(['type' => 'text/css', 'rel' => 'stylesheet'])->setHref('/assets/vendor/pikaday-time/css/' . ($this->getTheme() === self::DARKTHEME ? 'theme' : 'triangle') . '.css');
+                $css .= Html::el('link')->addAttributes(['type' => 'text/css', 'rel' => 'stylesheet'])->setHref('https://cdn.jsdelivr.net/gh/dek-cz/Pikaday/css/' . ($this->getTheme() === self::DARKTHEME ? 'theme' : 'triangle') . '.css');
             }
-            $js = Html::el('script')->addAttributes(['type' => 'text/javascript'])->setSrc('/assets/vendor/pikaday-time/pikaday.js');
+            $js = Html::el('script')->addAttributes(['type' => 'text/javascript'])->setSrc('https://cdn.jsdelivr.net/gh/dek-cz/Pikaday/pikaday.js');
             self::setCssjsIsSet(true);
         } else {
 //            $jsd = Html::el()->setHtml($template->renderToString(dirname(__FILE__) . '/templates/datetimeinputdynamic.js.latte'));
