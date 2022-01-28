@@ -94,7 +94,7 @@ class Form extends BaseForm
      * @param [] $items
      * @return RadioList
      */
-    public function addRadios($caption = NULL, $items): RadioList
+    public function addRadios($caption = NULL, $items = []): RadioList
     {
         foreach ($items as $i) {
             $i->setForm($this);
