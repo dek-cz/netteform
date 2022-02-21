@@ -9,6 +9,7 @@ use DekApps\Form\Controls\DateTimeInput;
 use DekApps\Form\Controls\Calendar;
 use DekApps\Form\Controls\PhoneInput;
 use DekApps\Form\Controls\TextInput;
+use DekApps\Form\Controls\MultiUpload;
 use Nette\ComponentModel\IContainer;
 
 class Form extends BaseForm
@@ -94,13 +95,26 @@ class Form extends BaseForm
      * @param [] $items
      * @return RadioList
      */
-    public function addRadios($caption = NULL, $items): RadioList
+    public function addRadios($caption = NULL, $items = []): RadioList
     {
         foreach ($items as $i) {
             $i->setForm($this);
         }
         $fitem = reset($items);
         return ($this[$fitem->getRadioName()] = (new RadioList($caption, $items)));
+    }
+
+    /**
+     * 
+     * @param string $name
+     * @param string|null $label
+     * @param int $maxFileSize
+     * @param int $maxFileCount
+     * @return MultiUpload
+     */
+    public function addMultiUpload(string $name, $label = null, $maxFileSize = 4 * 1024 * 1024, $maxFileCount = 10): MultiUpload
+    {
+        return ($this[$name] = (new MultiUpload($label, $maxFileSize, $maxFileCount)));
     }
 
 }

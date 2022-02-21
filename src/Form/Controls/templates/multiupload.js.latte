@@ -1,0 +1,84 @@
+{block content}
+<label for="{$inputId}" role="button" class="dek-button-white form__label">Vybrat soubory</label>
+<div data-js-upload-files="{$inputId}" class="form__upload-files"></div>
+<span data-js-upload-error="{$inputId}" style="display: none;" class="input-error">Maximální velikost souboru byla překročena.</span>
+<span data-js-upload-error-counter="{$inputId}" style="display: none;" class="input-error">Maximální počet souborů byl překročen.</span>
+
+<script type="text/javascript">
+    (function () {
+        const upload = {
+            uploadEl: null,
+            uploadedFiles: null,
+            dt: new DataTransfer(),
+            maxFileSizeOverload: false,
+            maxFileSize: {$maxFileSize},
+            maxFileCount: {$maxFileCount},
+            init(uploadEl, uploadedFiles) {
+                this.uploadEl = uploadEl;
+                this.uploadedFiles = uploadedFiles;
+            },
+            addListenerUpload() {
+                this.uploadEl.addEventListener('change', () => {
+                    this.maxFileSizeOverload = false;
+                    for (const file of this.uploadEl.files) {
+                        if (this.dt.items.length >= this.maxFileCount){
+                            this.displayFileCounterError();
+                            break;
+                        } else{
+                            this.displayFileCounterError(false);
+                        }
+                        if (this.checkFileSize(file)){
+                            this.maxFileSizeOverload = true;
+                        } else{
+                            this.uploadedFiles.insertAdjacentHTML('beforeend', this.createHtmlForFile(file));
+                            // Přidání souborů do objektu DataTransfer
+                            this.dt.items.add(file);
+                        }
+                    }
+                    // Aktualizace souborů vstupního souboru po přidání
+                    this.uploadEl.files = this.dt.files;
+                    this.addListenerDelete();
+                    this.displayFileSizeError();
+                });
+            },
+            checkFileSize(file) {
+                return file.size >= this.maxFileSize;
+            },
+            createHtmlForFile(file) {
+                return '<div class="form__upload-files__file">\n\
+                        <span class="form__upload-files__name">' + file.name + '</span>\n\
+                        <span class="form__upload-files__delete">&Cross;</span>\n\
+                    </div>';
+            },
+            addListenerDelete() {
+                this.uploadedFiles.querySelectorAll('.upload-files__delete').forEach((e, index) => {
+                    e.addEventListener('click', (e) => {
+                        e.target.parentElement.remove();
+                        this.dt.items.remove(index);
+                        this.uploadEl.files = dt.files;
+                    });
+                });
+            },
+            displayFileSizeError() {
+                if (this.maxFileSizeOverload){
+                    document.querySelector('[data-js-upload-error="' +{$inputId} + '"]').style.display = 'block';
+                } else{
+                    document.querySelector('[data-js-upload-error="' +{$inputId} + '"]').style.display = 'none';
+                }
+            },
+            displayFileCounterError(status = true) {
+                if (status){
+                    document.querySelector('[data-js-upload-error-counter="' +{$inputId} + '"]').style.display = 'block';
+                } else{
+                    document.querySelector('[data-js-upload-error-counter="' +{$inputId} + '"]').style.display = 'none';
+            }
+            },
+        };
+
+        upload.init(
+                document.getElementById({$inputId}),
+                document.querySelector('[data-js-upload-files="' +{$inputId} + '"]')
+                );
+        upload.addListenerUpload();
+    }());
+</script>
