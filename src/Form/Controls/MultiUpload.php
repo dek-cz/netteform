@@ -11,14 +11,45 @@ class MultiUpload extends UploadControl
 
     use TWrapp;
 
-    private $maxFileSize  = 4 * 1024 * 1024;
-    private $maxFileCount = 10;
+    private $maxFileSize       = 4 * 1024 * 1024;
+    private $maxFileCount      = 10;
+    private $chooseFilesText   = 'Vybrat soubory';
+    private $maxFileSizeError  = 'Maximální velikost souboru byla překročena.';
+    private $maxFileCountError = 'Maximální počet souborů byl překročen.';
 
-    public function __construct($label, $maxFileSize, $maxFileCount)
+    public function __construct($label)
     {
         parent::__construct($label, true);
-        $this->maxFileSize  = $maxFileSize;
+    }
+
+    public function setMaxFileSize($maxFileSize)
+    {
+        $this->maxFileSize = $maxFileSize;
+        return $this;
+    }
+
+    public function setMaxFileCount($maxFileCount)
+    {
         $this->maxFileCount = $maxFileCount;
+        return $this;
+    }
+
+    public function setChooseFilesText($chooseFilesText)
+    {
+        $this->chooseFilesText = $chooseFilesText;
+        return $this;
+    }
+
+    public function setMaxFileSizeError($maxFileSizeError)
+    {
+        $this->maxFileSizeError = $maxFileSizeError;
+        return $this;
+    }
+
+    public function setMaxFileCountError($maxFileCountError)
+    {
+        $this->maxFileCountError = $maxFileCountError;
+        return $this;
     }
 
     public function getControl($wrap = true): Html
@@ -28,13 +59,17 @@ class MultiUpload extends UploadControl
         }
 
         $inputHmtl = parent::getControl();
-        $inputHmtl->setHtmlAttribute('class', 'form__upload');
-        $inputHmtl->setHtmlAttribute('role', 'upload');
+        $inputHmtl->addAttributes(['class' => 'form__upload']);
+        $inputHmtl->addAttributes(['role' => 'upload']);
         $template  = new Template(new \Latte\Engine());
 
         $template->inputId      = $inputHmtl->id;
         $template->maxFileSize  = $this->maxFileSize;
         $template->maxFileCount = $this->maxFileCount;
+
+        $template->chooseFilesText   = $this->chooseFilesText;
+        $template->maxFileSizeError  = $this->maxFileSizeError;
+        $template->maxFileCountError = $this->maxFileCountError;
 
         $html = Html::el();
         $html->addHtml($inputHmtl);

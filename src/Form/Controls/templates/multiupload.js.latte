@@ -1,8 +1,8 @@
 {block content}
-<label for="{$inputId}" role="button" class="dek-button-white form__label">Vybrat soubory</label>
+<label for="{$inputId}" role="button" class="dek-button-white form__label">{$chooseFilesText}</label>
 <div data-js-upload-files="{$inputId}" class="form__upload-files"></div>
-<span data-js-upload-error="{$inputId}" style="display: none;" class="input-error">Maximální velikost souboru byla překročena.</span>
-<span data-js-upload-error-counter="{$inputId}" style="display: none;" class="input-error">Maximální počet souborů byl překročen.</span>
+<span data-js-upload-error="{$inputId}" style="display: none;" class="input-error">{$maxFileSizeError}</span>
+<span data-js-upload-error-counter="{$inputId}" style="display: none;" class="input-error">{$maxFileCountError}</span>
 
 <script type="text/javascript">
     (function () {

@@ -108,13 +108,11 @@ class Form extends BaseForm
      * 
      * @param string $name
      * @param string|null $label
-     * @param int $maxFileSize
-     * @param int $maxFileCount
      * @return MultiUpload
      */
-    public function addMultiUpload(string $name, $label = null, $maxFileSize = 4 * 1024 * 1024, $maxFileCount = 10): MultiUpload
+    public function addMultiUpload(string $name, $label = null): MultiUpload
     {
-        return ($this[$name] = (new MultiUpload($label, $maxFileSize, $maxFileCount)));
+        return ($this[$name] = (new MultiUpload($label)));
     }
 
 }
