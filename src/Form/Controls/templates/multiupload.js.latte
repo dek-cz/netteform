@@ -51,7 +51,7 @@
                     </div>';
             },
             addListenerDelete() {
-                this.uploadedFiles.querySelectorAll('.upload-files__delete').forEach((e, index) => {
+                this.uploadedFiles.querySelectorAll('.form__upload-files__delete').forEach((e, index) => {
                     e.addEventListener('click', (e) => {
                         e.target.parentElement.remove();
                         this.dt.items.remove(index);
