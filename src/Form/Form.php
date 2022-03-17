@@ -9,6 +9,7 @@ use DekApps\Form\Controls\DateTimeInput;
 use DekApps\Form\Controls\Calendar;
 use DekApps\Form\Controls\PhoneInput;
 use DekApps\Form\Controls\TextInput;
+use DekApps\Form\Controls\MultiUpload;
 use Nette\ComponentModel\IContainer;
 
 class Form extends BaseForm
@@ -101,6 +102,17 @@ class Form extends BaseForm
         }
         $fitem = reset($items);
         return ($this[$fitem->getRadioName()] = (new RadioList($caption, $items)));
+    }
+
+    /**
+     * 
+     * @param string $name
+     * @param string|null $label
+     * @return MultiUpload
+     */
+    public function addMultiUpload(string $name, $label = null): MultiUpload
+    {
+        return ($this[$name] = (new MultiUpload($label)));
     }
 
 }
