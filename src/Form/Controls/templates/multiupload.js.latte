@@ -55,7 +55,7 @@
                     e.addEventListener('click', (e) => {
                         e.target.parentElement.remove();
                         this.dt.items.remove(index);
-                        this.uploadEl.files = dt.files;
+                        this.uploadEl.files = this.dt.files;
                     });
                 });
             },

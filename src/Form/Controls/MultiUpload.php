@@ -2,7 +2,7 @@
 
 namespace DekApps\Form\Controls;
 
-use Nette\Bridges\ApplicationLatte\Template;
+use DekApps\Form\Templates\MultiUploadTemplate as Template;
 use Nette\Forms\Controls\UploadControl;
 use Nette\Utils\Html;
 
@@ -63,7 +63,7 @@ class MultiUpload extends UploadControl
         $inputHmtl->addAttributes(['role' => 'upload']);
         $template  = new Template(new \Latte\Engine());
 
-        $template->inputId      = $inputHmtl->id;
+        $template->inputId      = (string) $inputHmtl->id;
         $template->maxFileSize  = $this->maxFileSize;
         $template->maxFileCount = $this->maxFileCount;
 
