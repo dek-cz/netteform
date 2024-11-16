@@ -8,8 +8,8 @@
         "nette/utils": "^4.0",
         "nette/forms": "^3.0",
         "nette/application": "^3.2",
-        "dek-cz/translation": "dev-master",
-        "symfony/yaml": "3.4.11"
+        "symfony/yaml": "^6.0",
+        "contributte/translation": "^2.0"
     },
     "require-dev": {
         "nette/tester": "^2.3",
