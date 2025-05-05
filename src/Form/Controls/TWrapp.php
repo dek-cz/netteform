@@ -7,12 +7,12 @@ trait TWrapp
 
     private $dekWrapper = true;
 
-    public function getDekWrapper()
+    public function getDekWrapper(): bool
     {
         return $this->dekWrapper;
     }
 
-    public function setDekWrapper($dekWrapper)
+    public function setDekWrapper(bool $dekWrapper): static
     {
         $this->dekWrapper = $dekWrapper;
         return $this;

@@ -115,7 +115,7 @@ class DateTimeInput extends BaseControl
         }
     }
 
-    public function setValue($value = null)
+    public function setValue(mixed $value = null): static
     {
         if ($value === null || $value instanceof \DateTime) {
             $this->value = $value;
@@ -140,7 +140,7 @@ class DateTimeInput extends BaseControl
         return $this;
     }
 
-    public function getControl($wrap = true)
+    public function getControl(?bool $wrap = true): string
     {
         if ($this->getDekWrapper() && $wrap && $this->getForm() && $this->getForm()->getRenderer()) {
             return $this->getForm()->getRenderer()->renderLabel($this) . $this->getForm()->getRenderer()->renderControl($this);

@@ -306,12 +306,12 @@ class PhoneInput extends BaseControl
     /** @var string */
     private $defaultPrefix = '+420';
 
-    public static function getCssjsIsSet()
+    public static function getCssjsIsSet(): string
     {
         return self::$cssjsIsSet;
     }
 
-    public static function setCssjsIsSet($cssjsIsSet)
+    public static function setCssjsIsSet($cssjsIsSet): void
     {
         self::$cssjsIsSet = $cssjsIsSet;
     }
@@ -321,7 +321,7 @@ class PhoneInput extends BaseControl
      * @return $this
      * @throws \Nette\InvalidArgumentException
      */
-    public function setValue($value)
+    public function setValue(mixed $value): static
     {
         if ($value === NULL) {
             $this->prefix = NULL;
@@ -344,7 +344,7 @@ class PhoneInput extends BaseControl
     /**
      * @return string|NULL
      */
-    public function getValue()
+    public function getValue(): mixed
     {
         if (empty($this->prefix) || empty($this->prefix)) {
             return NULL;
@@ -360,7 +360,7 @@ class PhoneInput extends BaseControl
      * @param string
      * @return $this
      */
-    public function setDefaultPrefix($prefix)
+    public function setDefaultPrefix(string $prefix): static 
     {
         if (!in_array($prefix, static::$phonePrefixes, TRUE) && !is_null($prefix)) {
             throw new \Nette\InvalidArgumentException('This prefix is not supported');
@@ -383,7 +383,7 @@ class PhoneInput extends BaseControl
         $this->number = $this->getHttpData(Form::DATA_LINE, '[' . static::NAME_NUMBER . ']');
     }
 
-    public function getControl($wrap = true)
+    public function getControl(?bool $wrap = true): string
     {
         if ($this->getDekWrapper() && $wrap && $this->getForm() && $this->getForm()->getRenderer()) {
             return $this->getForm()->getRenderer()->renderLabel($this) . $this->getForm()->getRenderer()->renderControl($this);
@@ -402,7 +402,7 @@ class PhoneInput extends BaseControl
      * @return Html
      * @throws \Nette\InvalidArgumentException
      */
-    private function getPart($key): Html
+    private function getPart(string $key): Html
     {
         $name = $this->getHtmlName();
         if ($key === static::NAME_PREFIX) {
@@ -457,7 +457,7 @@ class PhoneInput extends BaseControl
      * @param string
      * @return bool
      */
-    private static function validatePhoneNumberString($value)
+    private static function validatePhoneNumberString(string $value): bool
     {
         $value = self::normalizePhoneNumber($value);
         return (bool) Strings::match($value, self::getPattern());
@@ -466,7 +466,7 @@ class PhoneInput extends BaseControl
     /**
      * @return string
      */
-    private static function getPattern()
+    private static function getPattern(): string
     {
         return '~^(?P<' . static::NAME_PREFIX . '>\\' . implode('|\\', static::$phonePrefixes) . ')(?P<' . static::NAME_NUMBER . '>\d{6,15})$~';
     }
@@ -475,7 +475,7 @@ class PhoneInput extends BaseControl
      * @param string
      * @return string
      */
-    private static function normalizePhoneNumber($value)
+    private static function normalizePhoneNumber(string $value): string
     {
         $value = Strings::replace($value, array(
                     '~(\s+|\.|-)~' => '', // remove separators

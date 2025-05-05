@@ -11,6 +11,7 @@ class Checkbox extends BaseCheckBox
     use TWrapp;
 
     const TITLE = 'title';
+
     const TEXT = 'text';
 
     /** @var string */
@@ -27,13 +28,13 @@ class Checkbox extends BaseCheckBox
      */
     protected $textParams = [];
 
-    public function __construct($label = NULL)
+    public function __construct(mixed $label = NULL)
     {
         parent::__construct($label);
         $this->setAttribute('role', 'checkbox');
     }
 
-    public function setText($text)
+    public function setText($text): static
     {
         if (!is_string($text)) {
             throw new \Exception(sprintf("Value must be STRING, %s given in field '%s'.", gettype($text), $this->name));
@@ -42,7 +43,7 @@ class Checkbox extends BaseCheckBox
         return $this;
     }
 
-    public function setReadOnly()
+    public function setReadOnly(): static
     {
         $this->readonly = 'readonly';
         $this->setAttribute('readonly', 'readonly');
@@ -50,7 +51,7 @@ class Checkbox extends BaseCheckBox
         return $this;
     }
 
-    public function getReadonly()
+    public function getReadonly(): string
     {
         return $this->readonly;
     }
@@ -59,12 +60,12 @@ class Checkbox extends BaseCheckBox
      * Returns control's value.
      * @return mixed
      */
-    public function getText()
+    public function getText(): mixed
     {
         return $this->text;
     }
 
-    public function getControl($wrap = true): Html
+    public function getControl(?bool $wrap = true): Html
     {
         if ($this->getDekWrapper() && $wrap && $this->getForm() && $this->getForm()->getRenderer()) {
             return $this->getForm()->getRenderer()->renderControl($this);
@@ -72,7 +73,7 @@ class Checkbox extends BaseCheckBox
         $label = $this->getLabelPart();
         $label->setText('');
         $label->addClass('dek-checkbox');
-        if($this->hasErrors()) {
+        if ($this->hasErrors()) {
             $label->addClass('error');
         }
         $label->insert(0, $this->getControlPart());
@@ -85,14 +86,14 @@ class Checkbox extends BaseCheckBox
         return $this->getSeparatorPrototype()->setHtml($label);
     }
 
-    public function setTitleParams($params)
+    public function setTitleParams(mixed $params): static
     {
 
         $this->textParams[self::TITLE] = $params;
         return $this;
     }
 
-    public function setTextParams($params)
+    public function setTextParams(mixed $params): static
     {
 
         $this->textParams[self::TEXT] = $params;
@@ -103,10 +104,10 @@ class Checkbox extends BaseCheckBox
      * @param bool $checked
      * @return $this
      */
-    public function setChecked($checked)
+    public function setChecked(bool $checked): static
     {
         $this->checked = $checked;
         return $this;
-}
+    }
 
 }

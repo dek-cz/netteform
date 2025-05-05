@@ -45,7 +45,7 @@ class Radio extends BaseRadio
         $this->form = $form;
     }
 
-    public function setText($text)
+    public function setText($text): self
     {
         if (!is_string($text)) {
             throw new \Exception(sprintf("Value must be STRING, %s given in field '%s'.", gettype($text), $this->name));
@@ -54,7 +54,7 @@ class Radio extends BaseRadio
         return $this;
     }
 
-    public function setReadOnly()
+    public function setReadOnly(): self
     {
         $this->readonly = 'readonly';
         $this->setAttribute('readonly', 'readonly');
@@ -62,7 +62,7 @@ class Radio extends BaseRadio
         return $this;
     }
 
-    public function getReadonly()
+    public function getReadonly(): string
     {
         return $this->readonly;
     }
@@ -71,7 +71,7 @@ class Radio extends BaseRadio
      * Returns control's value.
      * @return mixed
      */
-    public function getText()
+    public function getText(): mixed
     {
         return $this->text;
     }
@@ -100,26 +100,26 @@ class Radio extends BaseRadio
         return $this->getSeparatorPrototype()->setHtml($label);
     }
 
-    public function setTitleParams($params)
+    public function setTitleParams($params): self
     {
 
         $this->textParams[self::TITLE] = $params;
         return $this;
     }
 
-    public function setTextParams($params)
+    public function setTextParams($params): self
     {
 
         $this->textParams[self::TEXT] = $params;
         return $this;
     }
 
-    public function getRadioName()
+    public function getRadioName(): string
     {
         return $this->radioName;
     }
 
-    public function setRadioName($radioName)
+    public function setRadioName(string $radioName): self
     {
         $this->radioName = $radioName;
         return $this;
@@ -138,13 +138,13 @@ class Radio extends BaseRadio
         return $this->form;
     }
 
-    public function setForm($form)
+    public function setForm(\Nette\Forms\Form $form): self
     {
         $this->form = $form;
         return $this;
     }
 
-    public function setValue($value)
+    public function setValue(mixed $value): self
     {
         if (!is_scalar($value) && $value !== NULL) {
             throw new \Nette\InvalidArgumentException(sprintf("Value must be scalar or NULL, %s given in field '%s'.", gettype($value), $this->name));
@@ -176,7 +176,7 @@ class Radio extends BaseRadio
         return $el->addAttributes($attr);
     }
 
-    public function getChecked()
+    public function getChecked(): bool
     {
         return $this->checked;
     }
@@ -185,7 +185,7 @@ class Radio extends BaseRadio
      * @param bool $checked
      * @return $this
      */
-    public function setChecked($checked)
+    public function setChecked(bool $checked): self
     {
         $this->checked = $checked;
         return $this;
@@ -195,7 +195,7 @@ class Radio extends BaseRadio
      * @param string $icon
      * @return $this
      */
-    public function setIcon(string $icon)
+    public function setIcon(string $icon): self
     {
         $this->icon = $icon;
         return $this;
@@ -206,7 +206,7 @@ class Radio extends BaseRadio
      * @param  bool  $value
      * @return static
      */
-    public function setDisabled($value = true)
+    public function setDisabled($value = true): self
     {
         if ($this->disabled = (bool) $value) {
             //not if radio

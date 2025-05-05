@@ -3,6 +3,8 @@
 namespace DekApps\Form\Controls;
 
 use Nette\Forms\Controls\ChoiceControl as BaseChControl;
+use Nette\Utils\Html;
+use Stringable;
 
 class RadioList extends BaseChControl
 {
@@ -17,7 +19,7 @@ class RadioList extends BaseChControl
         parent::__construct(null, $items);
     }
 
-    public function getControl($wrap = true)
+    public function getControl($wrap = true): string
     {
         if ($this->getDekWrapper() && $wrap && $this->getForm() && $this->getForm()->getRenderer()) {
             return $this->getForm()->getRenderer()->renderControl($this);
@@ -31,12 +33,12 @@ class RadioList extends BaseChControl
         return $res;
     }
 
-    public function getLabel($caption = NULL)
+    public function getLabel(Stringable|string|null $caption = NULL): Html
     {
-        return \Nette\Utils\Html::el('div')->setClass('dek-radio-list-label')->setText($this->translate($caption === null ? $this->mainLabel : $caption));
+        return Html::el('div')->setClass('dek-radio-list-label')->setText($this->translate($caption === null ? $this->mainLabel : $caption));
     }
 
-    public function setValue($value)
+    public function setValue($value): static
     {
         foreach ($this->getItems() as $item) {
             if ($item->getValue() == $value) {
@@ -48,12 +50,15 @@ class RadioList extends BaseChControl
         return $this;
     }
 
-    public function getValue()
+    /**
+     * overide
+     */
+    public function getValue(): mixed
     {
         return $this->value;
     }
 
-    public function setRequired($value = TRUE)
+    public function setRequired(Stringable|string|bool $value = true): static
     {
         foreach ($this->getItems() as $item) {
             $item->setRequired($value);
@@ -65,7 +70,7 @@ class RadioList extends BaseChControl
      * Returns selected value.
      * @return mixed
      */
-    public function getSelectedItem()
+    public function getSelectedItem(): mixed
     {
         $value = $this->getValue();
         foreach ($this->getItems() as $item) {

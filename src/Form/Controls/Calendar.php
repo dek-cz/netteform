@@ -10,9 +10,10 @@ use Nette\Forms\Controls\TextInput,
  */
 class Calendar extends TextInput
 {
+
     use TWrapp;
-    
-    public function getControl($wrap = true): Html
+
+    public function getControl(?bool $wrap = true): Html
     {
         if ($this->getDekWrapper() && $wrap && $this->getForm() && $this->getForm()->getRenderer()) {
             return Html::el()->setHtml($this->getForm()->getRenderer()->renderLabel($this) . $this->getForm()->getRenderer()->renderControl($this));
@@ -23,14 +24,15 @@ class Calendar extends TextInput
         $inputHmtl->addAttributes(['onfocus' => 'this.setAttribute("readonly", "readonly")']);
         $inputHmtl->addAttributes(['data-input-type' => 'dek-calendar']);
         $template = new \Latte\Engine;
-        
+
         $err = $this->getErrors();
         $script = '';
         if ($err) {
-            $errorMessage = is_array($err) && isset($err[0]) ? $err[0]: '';
+            $errorMessage = is_array($err) && isset($err[0]) ? $err[0] : '';
             $inputHmtl->class('error', true);
             $script = "<script>(function(){var el = document.getElementById('$inputHmtl->id');el.setCustomValidity('$errorMessage');el.removeAttribute('readonly');el.reportValidity();})();</script>";
         }
         return (Html::el()->setHtml($template->renderToString(dirname(__FILE__) . '/templates/calendar.js.latte')))->addHtml($inputHmtl)->addHtml($script);
     }
+
 }

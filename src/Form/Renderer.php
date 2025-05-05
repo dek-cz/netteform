@@ -13,12 +13,12 @@ class Renderer extends DefaultFormRenderer
     /** js load controling */
     private static $jsIsSet = false;
 
-    public static function getJsIsSet()
+    public static function getJsIsSet(): string
     {
         return self::$jsIsSet;
     }
 
-    public static function setJsIsSet($jsIsSet)
+    public static function setJsIsSet($jsIsSet): void
     {
         self::$jsIsSet = $jsIsSet;
     }
@@ -51,7 +51,7 @@ class Renderer extends DefaultFormRenderer
         return $s . parent::renderBegin();
     }
 
-    public function attachForm(Nette\Forms\Form $form)
+    public function attachForm(Nette\Forms\Form $form): void
     {
         $this->form = $form;
     }
